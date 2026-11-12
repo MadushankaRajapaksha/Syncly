@@ -1,0 +1,233 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+body {
+  background-color: #3a3f9d;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0px 128px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+li {
+  list-style: none;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 24px 0px;
+
+  font-size: 1.2rem;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+nav a {
+  background-color: white;
+  color: #3a3f9d;
+  padding: 6px 12px;
+  font-weight: 600;
+}
+
+nav h1 {
+  font-weight: 700;
+}
+.hero {
+  padding: 8em 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  /* max-width: 512px; */
+}
+
+.hero h1 {
+  font-size: 5em;
+  font-weight: 800;
+  max-width: 700px;
+  text-align: center;
+}
+
+.hero h3 {
+  font-size: 1.3em;
+  font-weight: 400;
+  max-width: 614px;
+  text-align: center;
+}
+
+.hero .cta .create {
+  font-size: 1.3em;
+  border: solid black 1px;
+  background-color: white;
+  color: #3a3f9d;
+  padding: 12px 24px;
+  font-weight: 600;
+}
+.hero .cta {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.hero .cta .features {
+  font-size: 1.3em;
+  border: solid white 1px;
+  background-color: transparent;
+  color: white;
+  padding: 12px 24px;
+  font-weight: 600;
+}
+
+.form {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+fieldset {
+  background: white;
+  padding: 24px;
+  color: black;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+
+  gap: 1em;
+
+  flex-direction: column;
+  margin: 2em;
+
+  /* width: fit-content; */
+}
+
+fieldset .changePhoto {
+  color: #3a3f9d;
+  cursor: pointer;
+}
+
+fieldset h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  padding: 1rem 0rem;
+}
+fieldset div .profileData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+fieldset .usernameIn,
+.emailIn,
+.rooNameIn,
+.streamUrlIn,
+.subtitleUrlIn,
+.passcodeIn
+ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+fieldset .isRoomPrivetIn{
+  width: 100%;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  justify-content: center; 
+  gap: 1rem;
+
+}
+
+fieldset .isRoomPrivetIn #toggle{
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+
+}
+
+fieldset .isRoomPrivetIn .toggle-l{
+  display: inline-block;
+  width: 56px;
+  height: 32px;
+  background: white;
+  border: solid black 1px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+fieldset .isRoomPrivetIn .toggle-l .toggle-tumb{
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: #3a3f9d;
+
+  transition: transform 0.3s ease;
+
+}
+
+#toggle:checked + .toggle-l{
+  background: rgb(238, 233, 233);
+
+}
+#toggle:checked + .toggle-l .toggle-tumb{
+  transform: translateX(24px);
+}
+
+fieldset div label {
+  font-size: 1em;
+  font-weight: 600;
+}
+
+fieldset div input {
+  font-size: 1.2em;
+  padding: 0.6rem 1.2rem;
+  /* width: 100%; */
+}
+
+fieldset .nxt-Btn,
+.createRoomBtn {
+  font-size: 1.2em;
+  padding: 0.6rem 1.2rem;
+  width: 100%;
+  background-color: #3a3f9d;
+  color: white;
+  border: solid black 1px;
+  cursor: pointer;
+}
+
+.profileImage {
+  background: gray;
+  border-radius: 50%;
+  width: 128px;
+  height: 128px;
+}
+.erroMsgPro {
+  display: none;
+  align-items: start;
+  background-color: #c70942;
+  color: white;
+  font-weight: bold;
+  padding: 6px;
+  max-width: inherit;
+}

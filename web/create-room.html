@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Room - Syncly - Watch together. Stay together</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=1" />
+  </head>
+  <body>
+    <nav>
+      <h1 class="logo">Syncly</h1>
+      <ul class="items">
+        <li>Home</li>
+        <li>Features</li>
+        <li>How this work</li>
+      </ul>
+      <a href="/room" class="nav-cta"> Create Room</a>
+    </nav>
+    <div class="form">
+      <!-- user profile create  -->
+      <fieldset class="profileData">
+        <!-- profile piture select round  -->
+        <h1>Create you profile first</h1>
+        <img
+          src="/static/profile_pitures/Pug_wearing_.jpg"
+          alt=""
+          class="profileImage"
+        />
+        <p class="changePhoto">Change Photo</p>
+
+        <!-- username -->
+
+        <div class="usernameIn">
+          <label for="username">User Name* : </label>
+          <input
+            type="name"
+            name="username"
+            id="username"
+            placeholder="A name thats you friends call you!"
+            require
+          />
+        </div>
+        <!-- email  -->
+        <div class="emailIn">
+          <label for="email">Emaill Adress* : </label>
+          <input
+            type="email"
+            name="email"
+            id="emaill"
+            placeholder="A address get you maill in internet!"
+            required
+          />
+        </div>
+        <!-- show error masg wehn have erro -->
+        <div class="erroMsgPro" style="display: none">
+          <p></p>
+        </div>
+        <button class="nxt-Btn">Next</button>
+
+        <!-- nextbutton -->
+      </fieldset>
+      <!-- room create  -->
+      <fieldset class="roomData" style="display: none">
+        <h1>Let's config our room!</h1>
+        <!-- room name  -->
+        <div class="rooNameIn">
+          <label for="roomName">Room Name* : </label>
+          <input
+            type="name"
+            name="roomName"
+            id="roomName"
+            placeholder="Name room with cool name!"
+            require
+          />
+        </div>
+        <!-- streaming url  -->
+        <div class="streamUrlIn">
+          <label for="streamUrl">Stream Url* : </label>
+          <input
+            type="url"
+            name="streamUrl"
+            id="streamUrl"
+            placeholder="Add your video path with url..."
+            require
+          />
+        </div>
+        <!-- subtitle url  -->
+        <div class="subtitleUrlIn">
+          <label for="subtitleUrl">Sutitle Url : </label>
+          <input
+            type="url"
+            name="subtitleUrl"
+            id="subtitleUrl"
+            placeholder="Add your subtitles path with url..."
+          />
+        </div>
+        <!-- public togle  -->
+        <div class="isRoomPrivetIn">
+          <label for="toggle">Make Room Privet : </label>
+          <div>
+            <input
+              type="checkbox"
+              name="isRoomPrivet"
+              id="toggle"
+              class="toggle"
+            />
+            <label
+              for="toggle"
+              class="toggle-l"
+              role="switch"
+              aria-checked="false"
+            >
+              <span class="toggle-tumb"></span>
+            </label>
+          </div>
+        </div>
+        <!-- if privet invite code - coustem one (passcode) -->
+        <div class="passcodeIn" style="display: none">
+          <label for="passcode">Secret Code for Enter Room * : </label>
+          <input
+            type="text"
+            name="passcode"
+            min="4"
+            max="4"
+            placeholder="4-digit"
+            id="passcode"
+          />
+        </div>
+        <!-- show error masg wehn have erro -->
+        <div class="erroMsgRoom" style="display: none">
+          <p></p>
+        </div>
+        <!-- next button  -->
+        <button class="createRoomBtn">Create Room</button>
+      </fieldset>
+      <div>
+        <!-- show erro or succes mage and room link sahre option and go to room -->
+      </div>
+    </div>
+    <script>
+      // select elmet in DOM
+      const nextInProfile = document.querySelector(`.nxt-Btn`);
+      const profileDataField = document.querySelector(`.profileData`);
+      const roomDataField = document.querySelector(`.roomData`);
+
+      const createRoomBtn = document.querySelector(`.createRoomBtn`);
+      const usernameInp = document.querySelector(`#username`);
+      const emaillInp = document.querySelector(`#emaill`);
+
+      const roomNameInp = document.querySelector(`#roomName`);
+      const streamUrlInp = document.querySelector(`#streamUrl`);
+      const subtitleUrlInp = document.querySelector(`#subtitleUrl`);
+      const passcodeInp = document.querySelector(`#passcode`);
+
+      const errMsgInProfile = document.querySelector(`.erroMsgPro p`);
+
+      const roomIsPrivet = document.querySelector(`#toggle`);
+      const passcodeIn = document.querySelector(`.passcodeIn`);
+      const toggleLable = document.querySelector(`.toggle-l`);
+
+      let username = "";
+      let email = "";
+      // profilePiture <-todo
+
+      let roomName = "";
+      let streamUrl = "";
+      let subtitleUrl = "";
+      let isRoomPrivet = false;
+      let passcode = null;
+
+      // if (!nextInProfile){
+      //     return;
+      // }
+
+      const createRoomSend = (room) => {
+        console.log(room);
+      };
+
+      // toggle room is privet handler
+      roomIsPrivet.addEventListener("change", () => {
+        isRoomPrivet = roomIsPrivet.checked;
+        toggleLable.setAttribute("aria-checked", String(roomIsPrivet.checked));
+        passcodeIn.style.display = roomIsPrivet.checked ? "flex" : "none";
+      });
+
+      // handle nextbutton profiledata
+      nextInProfile.addEventListener("click", () => {
+        username = usernameInp.value.trim();
+        emaill = emaillInp.value.trim();
+
+        // validat data inputs: precentation cheack
+        if (username.trim() !== " " && emaill.trim() !== "") {
+          // is not " " and not null - > save data and go to nextstep.
+          // hide profilData form and show next room data form
+          profileDataField.style.display = "none";
+          roomDataField.style.display = "flex";
+        } else {
+          // else show input are misiisng and stat taht stage
+          document.querySelector(".erroMsgPro").style.display = "flex";
+          errMsgInProfile.innerHTML =
+            "You can't be here without username and emaill!";
+        }
+      });
+
+      // handle create room
+      createRoomBtn.addEventListener("click", () => {
+        roomName = roomNameInp.value.trim();
+        streamUrl = streamUrlInp.value.trim();
+        subtitleUrl = streamUrlInp.value.trim();
+
+        passcode = passcodeInp.value.trim();
+
+        // checke required datas is have with presnt cheack
+
+        if (isRoomPrivet) {
+          if (
+            (roomName !== " ") & (streamUrl !== " ") & (subtitleUrl !== "") &&
+            (passcode.length !== " ") & (passcode.length !== 4)
+          ) {
+            // saveDate
+
+            const room = {
+              userData: {
+                username,
+                email,
+                // profilepitrue
+              },
+              roomData: {
+                roomName,
+                streamUrl,
+                subtitleUrl,
+                isRoomPrivet,
+                passcode,
+              },
+            };
+            //  sends to api
+            const res = createRoomSend(room);
+
+            // cheack response
+          }
+        } else {
+          if ((roomName !== " ") & (streamUrl !== " ") & (subtitleUrl !== "")) {
+            // saveDate
+            const room = {
+              userData: {
+                username,
+                email,
+                // profilepitrue
+              },
+              roomData: {
+                roomName,
+                streamUrl,
+                subtitleUrl,
+                isRoomPrivet,
+                passcode,
+              },
+            };
+            //  sends to api
+            const res = createRoomSend(room);
+
+            // cheack response
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
