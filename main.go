@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"syncly/api"
+	"syncly/core"
 
 	"github.com/gorilla/mux"
 )
@@ -55,6 +57,11 @@ func createRoomRoute(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
+	// connect to database
+
+	pool := core.ConnectDb()
+	a := api.New(pool)
+
 	r := mux.NewRouter()
 	fs := http.FileServer(http.Dir("assets/"))
 
@@ -65,6 +72,9 @@ func main() {
 	r.HandleFunc("/", logging(landingPage))
 	// definde createroom route
 	r.HandleFunc("/create-room", logging(createRoomRoute))
+
+	// api routes
+	r.HandleFunc("/api/room", logging(a.CreateRoom))
 
 	fmt.Printf("Server in runnig : http://localhost:%s \n", port)
 	http.ListenAndServe(fmt.Sprintf(":%v", port), r)
