@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create New Room - Syncly - Watch together. Stay together</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=1" />
+    <link rel="stylesheet" href="/static/css/style.css?v=5" />
   </head>
   <body>
     <nav>
@@ -133,9 +133,39 @@
         <!-- next button  -->
         <button class="createRoomBtn">Create Room</button>
       </fieldset>
-      <div>
-        <!-- show erro or succes mage and room link sahre option and go to room -->
+      <!-- loading screen  -->
+      <div class="creatingRoom" style="display: none">
+        <h1>Room is prepiaring...</h1>
+        <!-- loading animation -->
+        <div class="loder"></div>
+        <span class="lable">give me second</span>
       </div>
+
+      <!-- room created succes  -->
+      <div class="roomCreated" style="display: none">
+        <h1>Grate Job, room created!</h1>
+         
+
+        <!-- succes icon with svg  -->
+        <svg
+          width="128px"
+          height="128px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.78 9.7L11.11 15.37C10.97 15.51 10.78 15.59 10.58 15.59C10.38 15.59 10.19 15.51 10.05 15.37L7.22 12.54C6.93 12.25 6.93 11.77 7.22 11.48C7.51 11.19 7.99 11.19 8.28 11.48L10.58 13.78L15.72 8.64C16.01 8.35 16.49 8.35 16.78 8.64C17.07 8.93 17.07 9.4 16.78 9.7Z"
+            fill="#3a3f9d"
+          />
+        </svg>
+
+        <button class="openRoomBtn ">
+          Open Room
+        </button>
+      </div>
+
+      <div></div>
     </div>
     <script>
       // select elmet in DOM
@@ -153,10 +183,15 @@
       const passcodeInp = document.querySelector(`#passcode`);
 
       const errMsgInProfile = document.querySelector(`.erroMsgPro p`);
+      const errMsgInRoom = document.querySelector(`.erroMsgRoom p`);
 
       const roomIsPrivet = document.querySelector(`#toggle`);
       const passcodeIn = document.querySelector(`.passcodeIn`);
       const toggleLable = document.querySelector(`.toggle-l`);
+
+
+      const lodingScreen = document.querySelector(`.creatingRoom`)
+      const succesScreen = document.querySelector(`.roomCreated`)
 
       let username = "";
       let email = "";
@@ -172,8 +207,34 @@
       //     return;
       // }
 
-      const createRoomSend = (room) => {
-        console.log(room);
+      // a resuble navigation fucntion  handler screen hide/display in form 
+
+      function popScreen(prev,next){
+        prev.style.display = "none";
+        next.style.display = "flex";
+      }
+
+      const createRoomSend = async (room) => {
+        try {
+          const res = await fetch("/api/room", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(room),
+          });
+
+          return res;
+        } catch (e) {
+          console.log(e);
+          return e;
+        }
+      };
+      // message model
+      const showMsg = (m) => {
+        console.log(m);
+        document.querySelector(".erroMsgRoom").style.display = "flex";
+        errMsgInProfile.innerHTML = m;
       };
 
       // toggle room is privet handler
@@ -192,8 +253,10 @@
         if (username.trim() !== " " && emaill.trim() !== "") {
           // is not " " and not null - > save data and go to nextstep.
           // hide profilData form and show next room data form
-          profileDataField.style.display = "none";
-          roomDataField.style.display = "flex";
+          
+          popScreen(profileDataField,roomDataField)
+          // profileDataField.style.display = "none";
+          // roomDataField.style.display = "flex";
         } else {
           // else show input are misiisng and stat taht stage
           document.querySelector(".erroMsgPro").style.display = "flex";
@@ -203,64 +266,76 @@
       });
 
       // handle create room
-      createRoomBtn.addEventListener("click", () => {
+      createRoomBtn.addEventListener("click", async () => {
         roomName = roomNameInp.value.trim();
         streamUrl = streamUrlInp.value.trim();
-        subtitleUrl = streamUrlInp.value.trim();
+        subtitleUrl = subtitleUrlInp.value.trim();
 
         passcode = passcodeInp.value.trim();
 
         // checke required datas is have with presnt cheack
+        const requiredOk = roomName !== "" && streamUrl !== "";
+
+        if (!requiredOk) {
+          // ..show message
+          showMsg("you cant create room without name and streamURL, required!");
+        }
 
         if (isRoomPrivet) {
-          if (
-            (roomName !== " ") & (streamUrl !== " ") & (subtitleUrl !== "") &&
-            (passcode.length !== " ") & (passcode.length !== 4)
-          ) {
-            // saveDate
-
-            const room = {
-              userData: {
-                username,
-                email,
-                // profilepitrue
-              },
-              roomData: {
-                roomName,
-                streamUrl,
-                subtitleUrl,
-                isRoomPrivet,
-                passcode,
-              },
-            };
-            //  sends to api
-            const res = createRoomSend(room);
-
-            // cheack response
-          }
-        } else {
-          if ((roomName !== " ") & (streamUrl !== " ") & (subtitleUrl !== "")) {
-            // saveDate
-            const room = {
-              userData: {
-                username,
-                email,
-                // profilepitrue
-              },
-              roomData: {
-                roomName,
-                streamUrl,
-                subtitleUrl,
-                isRoomPrivet,
-                passcode,
-              },
-            };
-            //  sends to api
-            const res = createRoomSend(room);
-
-            // cheack response
+          if (passcode.length !== 4) {
+            showMsg("passcode should be 4-digit and secret!");
+            return;
           }
         }
+
+        // saveDate
+
+        const room = {
+          userData: {
+            username,
+            email,
+            // profilepitrue
+          },
+          roomData: {
+            roomName,
+            streamUrl,
+            subtitleUrl,
+            isRoomPrivet,
+            passcode: isRoomPrivet ? passcode : null,
+          },
+        };
+        let res;
+        //  sends to api
+        try {
+          // show loading
+          popScreen(roomDataField,lodingScreen)
+          res = await createRoomSend(room);
+        } catch (e) {
+          popScreen(lodingScreen,roomDataField)
+          showMsg("Room Create ERROR : " + e.message);
+          return;
+        }
+
+        // cheack response ins okey
+        if (!res || !res.ok) {
+          let data;
+          try {
+            data = await res.json();
+          } catch (_) {
+            data = { message: "Request failed with no JSON body" };
+          }
+          popScreen(lodingScreen,roomDataField)
+          showMsg("ERROR : " + (data.message || JSON.stringify(data)));
+          return;
+        }
+
+        // when succes room create /
+
+        const data = await res.json();
+        popScreen(lodingScreen,succesScreen)
+        // showMsg("Succes, Rome has created!" + JSON.stringify(data, null, 2));
+
+        // cheack response
       });
     </script>
   </body>

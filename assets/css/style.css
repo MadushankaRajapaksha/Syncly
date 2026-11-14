@@ -138,33 +138,30 @@ fieldset .usernameIn,
 .rooNameIn,
 .streamUrlIn,
 .subtitleUrlIn,
-.passcodeIn
- {
+.passcodeIn {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
   width: 100%;
 }
 
-fieldset .isRoomPrivetIn{
+fieldset .isRoomPrivetIn {
   width: 100%;
   display: flex;
   align-items: start;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
   gap: 1rem;
-
 }
 
-fieldset .isRoomPrivetIn #toggle{
+fieldset .isRoomPrivetIn #toggle {
   position: absolute;
   opacity: 0;
   width: 1px;
   height: 1px;
-
 }
 
-fieldset .isRoomPrivetIn .toggle-l{
+fieldset .isRoomPrivetIn .toggle-l {
   display: inline-block;
   width: 56px;
   height: 32px;
@@ -174,7 +171,7 @@ fieldset .isRoomPrivetIn .toggle-l{
   cursor: pointer;
   transition: background 0.3s ease;
 }
-fieldset .isRoomPrivetIn .toggle-l .toggle-tumb{
+fieldset .isRoomPrivetIn .toggle-l .toggle-tumb {
   position: absolute;
   top: 4px;
   left: 4px;
@@ -183,14 +180,12 @@ fieldset .isRoomPrivetIn .toggle-l .toggle-tumb{
   background: #3a3f9d;
 
   transition: transform 0.3s ease;
-
 }
 
-#toggle:checked + .toggle-l{
+#toggle:checked + .toggle-l {
   background: rgb(238, 233, 233);
-
 }
-#toggle:checked + .toggle-l .toggle-tumb{
+#toggle:checked + .toggle-l .toggle-tumb {
   transform: translateX(24px);
 }
 
@@ -231,3 +226,85 @@ fieldset .nxt-Btn,
   padding: 6px;
   max-width: inherit;
 }
+
+div .creatingRoom{
+  background: white;
+  padding: 24px;
+  color: black;
+  display: flex;
+
+  align-items: center;
+
+  gap: 1em;
+
+  flex-direction: column;
+  margin: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  
+}
+
+.roomCreated{
+  background: white;
+  padding: 24px;
+  color: black;
+  display: flex;
+
+  align-items: center;
+
+  gap: 1em;
+
+  flex-direction: column;
+  margin: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+   
+}
+
+
+div .creatingRoom .loder {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+div .creatingRoom .loder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 6px solid rgba(255, 255, 255, 0.12);
+}
+
+div .creatingRoom .loder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 6px solid transparent;
+  border-top-color: #3a3f9d;
+  border-right-color: #3a3f9d;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+div .creatingRoom .lable {
+  font-weight: 500;
+}
+
+.openRoomBtn {
+  font-size: 1.2em;
+  padding: 0.6rem 1.2rem;
+  width: 100%;
+  background-color: #3a3f9d;
+  color: white;
+  border: solid black 1px;
+  cursor: pointer;
+}
+

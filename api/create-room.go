@@ -104,10 +104,10 @@ func (a *API) CreateRoom(w http.ResponseWriter, r *http.Request) {
 			userID,
 		).Scan(&roomId)
 
-		// cheack is have erros and its returning toom id
+		// cheack is have erros and its returning room id
 
 		if err == nil {
-			break
+			break // break when roomid is unique
 
 		}
 
