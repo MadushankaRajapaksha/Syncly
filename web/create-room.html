@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create New Room - Syncly - Watch together. Stay together</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=5" />
+    <link rel="stylesheet" href="/static/css/style.css?v=200" />
   </head>
   <body>
     <nav>
@@ -17,14 +17,24 @@
       <a href="/room" class="nav-cta"> Create Room</a>
     </nav>
     <div class="form">
+      <!-- image selector  -->
+      <div class="imageSelector">
+        <div class="box">
+          <h1>Select Image</h1>
+          <div class="imgList"></div>
+          <div class="selctBtn">
+            <button class="clsBtn">Close</button>
+            <button class="selectBtn">Select</button>
+          </div>
+        </div>
+      </div>
       <!-- user profile create  -->
-      <fieldset class="profileData">
-        <!-- profile piture select round  -->
+      <fieldset class="profileData" >
         <h1>Create you profile first</h1>
         <img
-          src="/static/profile_pitures/Pug_wearing_.jpg"
+          src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
           alt=""
-          class="profileImage"
+          class="profileImage "
         />
         <p class="changePhoto">Change Photo</p>
 
@@ -144,7 +154,6 @@
       <!-- room created succes  -->
       <div class="roomCreated" style="display: none">
         <h1>Grate Job, room created!</h1>
-         
 
         <!-- succes icon with svg  -->
         <svg
@@ -160,9 +169,7 @@
           />
         </svg>
 
-        <button class="openRoomBtn ">
-          Open Room
-        </button>
+        <button class="openRoomBtn">Open Room</button>
       </div>
 
       <div></div>
@@ -189,9 +196,29 @@
       const passcodeIn = document.querySelector(`.passcodeIn`);
       const toggleLable = document.querySelector(`.toggle-l`);
 
+      const lodingScreen = document.querySelector(`.creatingRoom`);
+      const succesScreen = document.querySelector(`.roomCreated`);
 
-      const lodingScreen = document.querySelector(`.creatingRoom`)
-      const succesScreen = document.querySelector(`.roomCreated`)
+      const profilePictureList = [
+        "Alien_drinking.jpg",
+        "Bear_wearing_popcorn_hat.jpg",
+        "Bulldog_boss_holding_cinema_ticket.jpg",
+        "Cat_wearing_headphones_holding.jpg",
+        "Cat_wearing_tiara_and_glasses.jpg",
+        "Dragon_popping_popcorn.jpg",
+        "Lion_wearing_3D_glasse.jpg",
+        "Marshmallow_wearing_VR_goggles_.jpg",
+        "Monkey_eating_bananas_and_popcorn.jpg",
+        "Monkey_prince_holding_golden_banana.jpg",
+        "Ninja_King_holding_popcorn.jpg",
+        "Owl_wizard_holding_wand.jpg",
+        "Panda_eating_popcorn_wearinga.jpg",
+        "Pizza_holding_cinema_ticket.jpg",
+        "Pug_wearing_.jpg",
+        "Purple_ghost_eating_nachos.jpg",
+        "Robot_holding_media_remote.jpg",
+        "Wolf_film_director_holding.jpg",
+      ];
 
       let username = "";
       let email = "";
@@ -203,13 +230,76 @@
       let isRoomPrivet = false;
       let passcode = null;
 
-      // if (!nextInProfile){
-      //     return;
-      // }
+      // imageSelector 
+      const ImageSelctorModel = document.querySelector(`.imageSelector`)
+      const changePhoto = document.querySelector(`.changePhoto`)
+      changePhoto.addEventListener('click',()=>{
+        ImageSelctorModel.classList.add('active')
 
-      // a resuble navigation fucntion  handler screen hide/display in form 
 
-      function popScreen(prev,next){
+      })
+
+      const selctBtn = document.querySelector(`.selectBtn`)
+      const clsBtn = document.querySelector(`.clsBtn`)
+
+      selctBtn.addEventListener('click',()=>{
+        closeImageModel()
+      })
+      clsBtn.addEventListener('click',()=>{
+        closeImageModel()
+      })
+      
+      const imageContainer  = document.querySelector(`.profileImage`)
+      const imageList = document.querySelector(`.imgList`)
+      const defDP = profilePictureList[2]
+
+      let selectedImage =  `/static/profile_pitures/${ profilePictureList[2]}`
+
+      // set default image to imagecontainer 
+      imageContainer.src  = `/static/profile_pitures/${defDP}`
+
+      // list all images 
+      let imgCount = 0
+
+      profilePictureList.forEach(img => {
+        const image = ` /static/profile_pitures/${img}`
+        const item = document.createElement("img")
+
+        item.src = image
+        item.className = `image_${imgCount}`
+        // when click on image handler
+        item.addEventListener('click',()=>{
+          selectedImage = image
+          imageContainer.src = image
+
+          const prevSelected = document.querySelector('.imgList .selected');
+          if (prevSelected){
+            prevSelected.classList.remove("selected")
+
+          }
+          item.classList.add('selected')
+          
+
+
+        })
+        imageList.appendChild(item);
+        imgCount++
+
+        
+      });
+
+
+      function closeImageModel(){
+        ImageSelctorModel.classList.remove('active')
+
+      }
+
+
+
+
+      // a resuble navigation fucntion  handler screen hide/display in form
+
+      function popScreen(prev, next) {
         prev.style.display = "none";
         next.style.display = "flex";
       }
@@ -234,7 +324,7 @@
       const showMsg = (m) => {
         console.log(m);
         document.querySelector(".erroMsgRoom").style.display = "flex";
-        errMsgInProfile.innerHTML = m;
+        errMsgInRoom.innerHTML = m;
       };
 
       // toggle room is privet handler
@@ -253,8 +343,8 @@
         if (username.trim() !== " " && emaill.trim() !== "") {
           // is not " " and not null - > save data and go to nextstep.
           // hide profilData form and show next room data form
-          
-          popScreen(profileDataField,roomDataField)
+
+          popScreen(profileDataField, roomDataField);
           // profileDataField.style.display = "none";
           // roomDataField.style.display = "flex";
         } else {
@@ -270,15 +360,17 @@
         roomName = roomNameInp.value.trim();
         streamUrl = streamUrlInp.value.trim();
         subtitleUrl = subtitleUrlInp.value.trim();
+        let profilePicture = selectedImage
 
         passcode = passcodeInp.value.trim();
 
         // checke required datas is have with presnt cheack
-        const requiredOk = roomName !== "" && streamUrl !== "";
+        const requiredOk = roomName !== "" && streamUrl !== "" && profilePicture !== "";
 
         if (!requiredOk) {
           // ..show message
           showMsg("you cant create room without name and streamURL, required!");
+          return;
         }
 
         if (isRoomPrivet) {
@@ -294,7 +386,7 @@
           userData: {
             username,
             email,
-            // profilepitrue
+            profilePitrue : selectedImage
           },
           roomData: {
             roomName,
@@ -308,10 +400,10 @@
         //  sends to api
         try {
           // show loading
-          popScreen(roomDataField,lodingScreen)
+          popScreen(roomDataField, lodingScreen);
           res = await createRoomSend(room);
         } catch (e) {
-          popScreen(lodingScreen,roomDataField)
+          popScreen(lodingScreen, roomDataField);
           showMsg("Room Create ERROR : " + e.message);
           return;
         }
@@ -324,7 +416,7 @@
           } catch (_) {
             data = { message: "Request failed with no JSON body" };
           }
-          popScreen(lodingScreen,roomDataField)
+          popScreen(lodingScreen, roomDataField);
           showMsg("ERROR : " + (data.message || JSON.stringify(data)));
           return;
         }
@@ -332,10 +424,14 @@
         // when succes room create /
 
         const data = await res.json();
-        popScreen(lodingScreen,succesScreen)
+        popScreen(lodingScreen, succesScreen);
         // showMsg("Succes, Rome has created!" + JSON.stringify(data, null, 2));
+        // setbutton to open room link
 
-        // cheack response
+        const openRoom = document.querySelector(`.openRoomBtn`);
+        openRoom.addEventListener("click", () => {
+          window.location.href = `/room/${data.roomId}`;
+        });
       });
     </script>
   </body>

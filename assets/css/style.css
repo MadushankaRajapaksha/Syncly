@@ -217,7 +217,8 @@ fieldset .nxt-Btn,
   width: 128px;
   height: 128px;
 }
-.erroMsgPro {
+.erroMsgPro,
+.erroMsgRoom {
   display: none;
   align-items: start;
   background-color: #c70942;
@@ -227,7 +228,7 @@ fieldset .nxt-Btn,
   max-width: inherit;
 }
 
-div .creatingRoom{
+div .creatingRoom {
   background: white;
   padding: 24px;
   color: black;
@@ -242,10 +243,9 @@ div .creatingRoom{
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  
 }
 
-.roomCreated{
+.roomCreated {
   background: white;
   padding: 24px;
   color: black;
@@ -260,9 +260,103 @@ div .creatingRoom{
   display: flex;
   flex-direction: column;
   gap: 3rem;
-   
 }
 
+.imageSelector {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: rgb(15, 23, 42, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+
+  width: 100%;
+  height: 100vh;
+  gap: 2em;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.imageSelector.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.imageSelector .box {
+  background-color: white;
+  color: black;
+  padding: 24px;
+  max-width: 520px;
+  max-height: 70vh;
+  overflow-y: auto;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.imgList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.imgList img {
+  width: 128px;
+  height: 128px;
+  border: 3px solid transparent;
+  object-fit: cover;
+  cursor: pointer;
+  margin: 0px 4px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.imgList img:hover {
+  transform: scale(1.04);
+  border-color: #2563eb;
+}
+.imgList .selected {
+  border-color: #2563eb;
+}
+
+.selctBtn {
+  width: 100%;
+  flex-direction: row;
+  align-items: end;
+  justify-content: end;
+  display: flex;
+  gap: 4px;
+}
+
+.selctBtn .clsBtn {
+  padding: 4px 16px;
+  color: #2563eb;
+  background: transparent;
+  border: solid #2563eb 2px;
+
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.selctBtn .selectBtn {
+  padding: 4px 16px;
+  color: white;
+  background: #2563eb;
+  border: solid #2563eb 2px;
+
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* default select set  */
+.image_0 {
+  border-color: #2563eb;
+}
 
 div .creatingRoom .loder {
   position: relative;
@@ -307,4 +401,3 @@ div .creatingRoom .lable {
   border: solid black 1px;
   cursor: pointer;
 }
-

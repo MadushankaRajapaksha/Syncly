@@ -13,8 +13,9 @@ import (
 )
 
 type UserData struct {
-	UserName string `json:"userName"`
-	Email    string `json:"email"`
+	UserName       string `json:"userName"`
+	Email          string `json:"email"`
+	profilePicture string `json:"profilePitrue"`
 }
 
 type RoomData struct {
@@ -76,8 +77,8 @@ func (a *API) CreateRoom(w http.ResponseWriter, r *http.Request) {
 	// -- add  user to database and get user id
 	var userID int
 	err = a.pool.QueryRow(ctx,
-		"INSERT INTO users (name, email) VALUES ($1, $2) RETURNING id",
-		roomData.UserName, roomData.Email,
+		"INSERT INTO users (name, email,profilePicture) VALUES ($1, $2,$3) RETURNING id",
+		roomData.UserName, roomData.Email, roomData.profilePicture,
 	).Scan(&userID)
 	// cheak is there have any errs
 	if err != nil {
@@ -105,12 +106,9 @@ func (a *API) CreateRoom(w http.ResponseWriter, r *http.Request) {
 		).Scan(&roomId)
 
 		// cheack is have erros and its returning room id
-
 		if err == nil {
 			break // break when roomid is unique
-
 		}
-
 	}
 
 	// make respose with room id an user id
