@@ -55,6 +55,15 @@ func createRoomRoute(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func roomRoute(w http.ResponseWriter, r *http.Request) {
+	// get room id
+	vars := mux.Vars(r)
+	roomId := vars["roomId"]
+
+	w.Write([]byte(string(roomId)))
+
+}
+
 func main() {
 
 	// connect to database
@@ -72,9 +81,12 @@ func main() {
 	r.HandleFunc("/", logging(landingPage))
 	// definde createroom route
 	r.HandleFunc("/create-room", logging(createRoomRoute))
+	// room route handler
+	r.HandleFunc("/room/{roomId}", logging(roomRoute))
 
 	// api routes
 	r.HandleFunc("/api/room", logging(a.CreateRoom))
+	r.HandleFunc("/api/room/{roomId}", logging(a.RoomHandler)).Methods("GET")
 
 	fmt.Printf("Server in runnig : http://localhost:%s \n", port)
 	http.ListenAndServe(fmt.Sprintf(":%v", port), r)

@@ -112,7 +112,6 @@ func (a *API) CreateRoom(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// make respose with room id an user id
-
 	WriteJSON(w, http.StatusAccepted, map[string]any{
 		"roomId": roomId,
 		"userId": userID,
