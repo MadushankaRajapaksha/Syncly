@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -69,8 +70,17 @@ func (a *API) CreateRoom(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "error")
 		return
 	}
+	// make cant create users or rooms without requireds
+	if roomData.UserName == " " ||
+		roomData.Email == " " ||
+		strings.TrimSpace(roomData.RoomName) == " " ||
+		roomData.StreamUrl == " " {
 
-	w.WriteHeader(http.StatusAccepted)
+		WriteJSON(w, 400, map[string]any{
+			"error": "missing required fields: username, email, roomName, streamUrl",
+		})
+		return
+	}
 
 	ctx := context.Background()
 

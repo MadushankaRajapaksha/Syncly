@@ -38,7 +38,7 @@ func (a *API) RoomHandler(w http.ResponseWriter, r *http.Request) {
 		// get body data froms pass code
 		err := json.NewDecoder(r.Body).Decode(&passcodeBody)
 		if err != nil {
-			WriteJSON(w, 500, map[string]any{
+			WriteJSON(w, http.StatusUnauthorized, map[string]any{
 				"error": "passcode is not valid!",
 			})
 			return
@@ -47,7 +47,7 @@ func (a *API) RoomHandler(w http.ResponseWriter, r *http.Request) {
 		// cheack passcord equils? db password
 
 		if passcodeBody.Passcode != passcodeDB {
-			WriteJSON(w, 500, map[string]any{
+			WriteJSON(w, http.StatusUnauthorized, map[string]any{
 				"error": "passcode is not valid!",
 			})
 
@@ -65,7 +65,7 @@ func (a *API) RoomHandler(w http.ResponseWriter, r *http.Request) {
 	err = a.pool.QueryRow(ctx, "SELECT name,streamUrl,subtitleUrl FROM room WHERE id = $1 ", roomId).Scan(&roomData.RoomName, &roomData.StreamUrl, &roomData.SubtitileUrl)
 
 	if err != nil {
-		WriteJSON(w, 500, map[string]any{
+		WriteJSON(w, http.StatusNotFound, map[string]any{
 			"error": "room is not valid!",
 		})
 		return
