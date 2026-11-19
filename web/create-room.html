@@ -29,12 +29,12 @@
         </div>
       </div>
       <!-- user profile create  -->
-      <fieldset class="profileData" >
+      <fieldset class="profileData">
         <h1>Create you profile first</h1>
         <img
           src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
           alt=""
-          class="profileImage "
+          class="profileImage"
         />
         <p class="changePhoto">Change Photo</p>
 
@@ -175,6 +175,7 @@
       <div></div>
     </div>
     <script>
+      
       // select elmet in DOM
       const nextInProfile = document.querySelector(`.nxt-Btn`);
       const profileDataField = document.querySelector(`.profileData`);
@@ -219,7 +220,7 @@
         "Robot_holding_media_remote.jpg",
         "Wolf_film_director_holding.jpg",
       ];
-
+      let userId = 0
       let username = "";
       let email = "";
       // profilePiture <-todo
@@ -229,73 +230,92 @@
       let subtitleUrl = "";
       let isRoomPrivet = false;
       let passcode = null;
+      let profilePicture;
 
-      // imageSelector 
-      const ImageSelctorModel = document.querySelector(`.imageSelector`)
-      const changePhoto = document.querySelector(`.changePhoto`)
-      changePhoto.addEventListener('click',()=>{
-        ImageSelctorModel.classList.add('active')
+      const imageContainer = document.querySelector(`.profileImage`);
+      const imageList = document.querySelector(`.imgList`);
+      const defDP = profilePictureList[2];
 
+      let selectedImage = `/static/profile_pitures/${profilePictureList[1]}`;
 
-      })
+      async function initUser() {
+        // cheack alread user data is in local storage
+        const localUser = await getUser();
+        const user = JSON.parse(localUser)
+       
+        // is have user set data to  user data form in create ro inputs and desable edit it
+        if (user) {
+          userId = user.userId
+          // username filed fill with user name and desable edit
+          usernameInp.value = user.username ;
+          usernameInp.disabled = true;
 
-      const selctBtn = document.querySelector(`.selectBtn`)
-      const clsBtn = document.querySelector(`.clsBtn`)
+          //email data
+          emaillInp.value = user.email;
+          emaillInp.disabled = true;
 
-      selctBtn.addEventListener('click',()=>{
-        closeImageModel()
-      })
-      clsBtn.addEventListener('click',()=>{
-        closeImageModel()
-      })
-      
-      const imageContainer  = document.querySelector(`.profileImage`)
-      const imageList = document.querySelector(`.imgList`)
-      const defDP = profilePictureList[2]
+          // set profile image 
+          selectedImage = user.profilePicture
 
-      let selectedImage =  `/static/profile_pitures/${ profilePictureList[2]}`
-
-      // set default image to imagecontainer 
-      imageContainer.src  = `/static/profile_pitures/${defDP}`
-
-      // list all images 
-      let imgCount = 0
-
-      profilePictureList.forEach(img => {
-        const image = ` /static/profile_pitures/${img}`
-        const item = document.createElement("img")
-
-        item.src = image
-        item.className = `image_${imgCount}`
-        // when click on image handler
-        item.addEventListener('click',()=>{
-          selectedImage = image
-          imageContainer.src = image
-
-          const prevSelected = document.querySelector('.imgList .selected');
-          if (prevSelected){
-            prevSelected.classList.remove("selected")
-
-          }
-          item.classList.add('selected')
-          
-
-
-        })
-        imageList.appendChild(item);
-        imgCount++
-
-        
-      });
-
-
-      function closeImageModel(){
-        ImageSelctorModel.classList.remove('active')
-
+          // hide profile piture changer
+          // changePhoto.style.display = none
+          // changePhoto.style.opacity = 0
+        }
       }
 
+      initUser();
 
+      // imageSelector
+      const ImageSelctorModel = document.querySelector(`.imageSelector`);
+      const changePhoto = document.querySelector(`.changePhoto`);
+      changePhoto.addEventListener("click", () => {
+        ImageSelctorModel.classList.add("active");
+      });
 
+      const selctBtn = document.querySelector(`.selectBtn`);
+      const clsBtn = document.querySelector(`.clsBtn`);
+
+      selctBtn.addEventListener("click", () => {
+        closeImageModel();
+      });
+      clsBtn.addEventListener("click", () => {
+        closeImageModel();
+      });
+
+      
+
+      
+
+      // set default image to imagecontainer
+      imageContainer.src = `/static/profile_pitures/${defDP}`;
+
+      // list all images
+      let imgCount = 0;
+
+      profilePictureList.forEach((img) => {
+        const image = ` /static/profile_pitures/${img}`;
+        const item = document.createElement("img");
+
+        item.src = image;
+        item.className = `image_${imgCount}`;
+        // when click on image handler
+        item.addEventListener("click", () => {
+          selectedImage = image;
+          imageContainer.src = image;
+
+          const prevSelected = document.querySelector(".imgList .selected");
+          if (prevSelected) {
+            prevSelected.classList.remove("selected");
+          }
+          item.classList.add("selected");
+        });
+        imageList.appendChild(item);
+        imgCount++;
+      });
+
+      function closeImageModel() {
+        ImageSelctorModel.classList.remove("active");
+      }
 
       // a resuble navigation fucntion  handler screen hide/display in form
 
@@ -337,10 +357,10 @@
       // handle nextbutton profiledata
       nextInProfile.addEventListener("click", () => {
         username = usernameInp.value.trim();
-        emaill = emaillInp.value.trim();
+        email = emaillInp.value.trim();
 
         // validat data inputs: precentation cheack
-        if (username.trim() !== " " && emaill.trim() !== "") {
+        if (username.trim() !== " " && email.trim() !== "") {
           // is not " " and not null - > save data and go to nextstep.
           // hide profilData form and show next room data form
 
@@ -360,12 +380,13 @@
         roomName = roomNameInp.value.trim();
         streamUrl = streamUrlInp.value.trim();
         subtitleUrl = subtitleUrlInp.value.trim();
-        let profilePicture = selectedImage
+        profilePicture = selectedImage;
 
         passcode = passcodeInp.value.trim();
 
         // checke required datas is have with presnt cheack
-        const requiredOk = roomName !== "" && streamUrl !== "" && profilePicture !== "";
+        const requiredOk =
+          roomName !== "" && streamUrl !== "" && profilePicture !== "";
 
         if (!requiredOk) {
           // ..show message
@@ -384,9 +405,10 @@
 
         const room = {
           userData: {
+            userId,
             username,
             email,
-            profilePitrue : selectedImage
+            profilePicture,
           },
           roomData: {
             roomName,
@@ -396,6 +418,8 @@
             passcode: isRoomPrivet ? passcode : null,
           },
         };
+
+        console.log(room)
         let res;
         //  sends to api
         try {
@@ -426,13 +450,59 @@
         const data = await res.json();
         popScreen(lodingScreen, succesScreen);
         // showMsg("Succes, Rome has created!" + JSON.stringify(data, null, 2));
-        // setbutton to open room link
 
+        // save user data in cookies local storage
+        const user = {
+          userId: data.userId,
+          username,
+          email,
+          profilePicture,
+        };
+
+        localStorage.setItem("x_user", JSON.stringify(user)); //save userdata in local storage
+
+        // setbutton to open room link
         const openRoom = document.querySelector(`.openRoomBtn`);
         openRoom.addEventListener("click", () => {
           window.location.href = `/room/${data.roomId}`;
         });
       });
+
+      async function getUser() {
+        const user = localStorage.getItem("x_user");
+        // local storage not have already user send null
+        if (!user) {
+          return null;
+        }
+        // sendvalidate api
+
+        try {
+          const res = await fetch("/api/validate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: user,
+          });
+
+          const userData = await res.json();
+          console.log(userData);
+
+          // cheak localy user id  if returend is valid  parese user
+          if (!userData.id) {
+            localStorage.removeItem("x_user")
+            return null;
+          }
+
+          // is not
+          // remove invalid userdate from localStorage
+          // localStorge.removeItem("x_user");
+          return user;
+        } catch (e) {
+          console.log(e);
+          return null;
+        }
+      }
     </script>
   </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.}} | room</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=11" />
+</head>
+<body>
+    <nav>
+      <h1 class="logo">Syncly</h1>
+      <ul class="items">
+        <li>Home</li>
+        <li>Features</li>
+        <li>How this work</li>
+      </ul>
+       <img
+          src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
+          alt=""
+          class="profileImageroom"
+        />
+    </nav>
+    <div class="roomContent">
+        <div>
+            <video id="syncVideo" width="720" controls></video>
+        
+            
+            </video>
+            <div class="chatCoantianer">
+                
+            </div>
+        </div>
+        <div class="users">
+
+        </div>
+       
+
+     
+        
+      </div>
+    </div>
+
+    
+    <script>
+        const roomID = {{.}} //get room id from go backend 
+        
+
+        const video = document.querySelector(`#syncVideo`)
+        let videoUrl = "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
+        video.src = videoUrl
+        video.load()
+        video.play()
+
+
+
+
+    </script>
+</body>
+</html>

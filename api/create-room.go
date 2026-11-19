@@ -14,9 +14,10 @@ import (
 )
 
 type UserData struct {
-	UserName       string `json:"userName"`
+	UserId         int    `json:"userID"`
+	UserName       string `json:"username"`
 	Email          string `json:"email"`
-	profilePicture string `json:"profilePitrue"`
+	ProfilePicture string `json:"profilePicture"`
 }
 
 type RoomData struct {
@@ -62,6 +63,8 @@ func (a *API) CreateRoom(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "Method Not Allowed!")
 	}
 
+	ctx := context.Background()
+
 	var roomData Room
 
 	err := json.NewDecoder(r.Body).Decode(&roomData)
@@ -82,19 +85,23 @@ func (a *API) CreateRoom(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ctx := context.Background()
-
-	// -- add  user to database and get user id
 	var userID int
-	err = a.pool.QueryRow(ctx,
-		"INSERT INTO users (name, email,profilePicture) VALUES ($1, $2,$3) RETURNING id",
-		roomData.UserName, roomData.Email, roomData.profilePicture,
-	).Scan(&userID)
-	// cheak is there have any errs
-	if err != nil {
-		fmt.Fprintf(w, "users has create faill : %v", err)
-		log.Fatal("Users Insertion fail!")
+	// create new user is user didnt have
+	if roomData.UserId == 0 {
+		// -- add  user to database and get user id
 
+		err = a.pool.QueryRow(ctx,
+			"INSERT INTO users (name, email,profilePicture) VALUES ($1, $2,$3) RETURNING id",
+			roomData.UserName, roomData.Email, roomData.ProfilePicture,
+		).Scan(&userID)
+		// cheak is there have any errs
+		if err != nil {
+			fmt.Fprintf(w, "users has create faill : %v", err)
+			log.Fatal("Users Insertion fail!")
+
+		}
+	} else {
+		userID = roomData.UserId
 	}
 
 	// -- add room with admin as creatd user

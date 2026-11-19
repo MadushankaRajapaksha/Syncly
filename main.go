@@ -60,7 +60,12 @@ func roomRoute(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	roomId := vars["roomId"]
 
-	w.Write([]byte(string(roomId)))
+	templ, err := template.ParseFiles("web/room.html")
+	if err != nil {
+		fmt.Fprint(w, "ERORR : Internal Server ERORR")
+
+	}
+	templ.Execute(w, roomId)
 
 }
 
@@ -87,6 +92,8 @@ func main() {
 	// api routes
 	r.HandleFunc("/api/room", logging(a.CreateRoom))
 	r.HandleFunc("/api/room/{roomId}", logging(a.RoomHandler)).Methods("GET")
+	r.HandleFunc("/sync/{roomId}", logging(api.SyncRoom))
+	r.HandleFunc("/api/validate", logging(a.ValidateUser))
 
 	fmt.Printf("Server in runnig : http://localhost:%s \n", port)
 	http.ListenAndServe(fmt.Sprintf(":%v", port), r)
