@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{.}} | room</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=11" />
+    <link rel="stylesheet" href="/static/css/style.css?v=123" />
 </head>
 <body>
+  <div class="loading" style="display: none;">
+    <div class="loder"></div>
+    <h1>Room in Prepairing...</h1>
+
+  </div>
     <nav>
-      <h1 class="logo">Syncly</h1>
-      <ul class="items">
-        <li>Home</li>
-        <li>Features</li>
-        <li>How this work</li>
-      </ul>
+      <h1>Room Name</h1>
+       
        <img
           src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
           alt=""
@@ -21,16 +22,44 @@
         />
     </nav>
     <div class="roomContent">
-        <div>
-            <video id="syncVideo" width="720" controls></video>
+        <div class="videoContainer">
+            <div class="video">
+              <video id="syncVideo" class="videoPlayer" width="720" controls></video>
         
             
             </video>
+            </div>
             <div class="chatCoantianer">
+              <div class="header">
+                <h1>Chat</h1>
+                <p class="onlineCount">online 0</p>
+
+
+              </div>
+              <div class="mesageShow">
+                <div class="msgBox">
+                  <div class="first">
+                    <img src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg" class="userImg" alt="">
+                  </div>
+                  <div class="sec">
+                    <p class="username">sithum</p>
+                    <p class="msg"> hey guys! how are u ? , lests start stream    </p> 
+                  </div>
+                  </p>
+                </div>
+
+              </div>
+              <div class="msgInp">
+                <input type="text" class="msgIn" placeholder="your message">
+                <button>send</button>
+              </div>
                 
             </div>
         </div>
-        <div class="users">
+        <div class="onlineUsersContainer">
+          <div class="header">
+            <h1>Online Users</h1>
+          </div>
 
         </div>
        
@@ -42,14 +71,31 @@
 
     
     <script>
+        setLoadingScreen(true)
         const roomID = {{.}} //get room id from go backend 
+        //get userdata from local storage
+        // is user is null show user data input screen 
+        // get room data 
+        // res is unautherized show  passcode input screen 
+        // res is notfound show invalid room 
+         
         
-
-        const video = document.querySelector(`#syncVideo`)
-        let videoUrl = "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
-        video.src = videoUrl
-        video.load()
+        const video = loadVideo(roomData.streamUrl)
         video.play()
+        setLoadingScreen(false)
+
+        function setLoadingScreen(isLoading){
+          const loadingScreen = document.querySelector(".loading")
+          loadingScreen.style.display = isLoading ? "flex" : "none"
+        }
+        
+        // loadvideo from url 
+        function loadVideo(src){
+            const video = document.querySelector(`#syncVideo`)
+            video.src = src
+            return video
+
+        }
 
 
 

@@ -235,7 +235,7 @@
       const imageContainer = document.querySelector(`.profileImage`);
       const imageList = document.querySelector(`.imgList`);
       const defDP = profilePictureList[2];
-
+      const changePhoto = document.querySelector(`.changePhoto`);
       let selectedImage = `/static/profile_pitures/${profilePictureList[1]}`;
 
       async function initUser() {
@@ -256,10 +256,11 @@
 
           // set profile image 
           selectedImage = user.profilePicture
+          imageContainer.src = selectedImage
 
           // hide profile piture changer
-          // changePhoto.style.display = none
-          // changePhoto.style.opacity = 0
+          changePhoto.style.display = none
+          changePhoto.style.opacity = 0
         }
       }
 
@@ -267,7 +268,7 @@
 
       // imageSelector
       const ImageSelctorModel = document.querySelector(`.imageSelector`);
-      const changePhoto = document.querySelector(`.changePhoto`);
+      
       changePhoto.addEventListener("click", () => {
         ImageSelctorModel.classList.add("active");
       });

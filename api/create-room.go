@@ -28,7 +28,7 @@ type RoomData struct {
 	Passcode     string `json:"passcode"`
 }
 
-type Room struct {
+type Rooms struct {
 	UserData `json:"userData"`
 	RoomData `json:"roomData"`
 }
@@ -65,7 +65,7 @@ func (a *API) CreateRoom(w http.ResponseWriter, r *http.Request) {
 
 	ctx := context.Background()
 
-	var roomData Room
+	var roomData Rooms
 
 	err := json.NewDecoder(r.Body).Decode(&roomData)
 
