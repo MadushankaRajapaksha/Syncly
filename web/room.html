@@ -4,9 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{.}} | room</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=123" />
+    <link rel="stylesheet" href="/static/css/style.css?v=54" />
 </head>
 <body>
+
+  <!-- pascode inp model  -->
+  <div class="passcode" style="display: none;">
+    <div class="passcodeContainer">
+      <h1>Enter Passcode</h1>
+      <p>use seacret code you friend sends you</p>
+      <div class="passcodeInpContainer">
+        <input type="text" class="otp-input" maxlength="1"  pattern="[0-9]*" />
+        <input type="text" class="otp-input" maxlength="1"  pattern="[0-9]*" />
+        <input type="text" class="otp-input" maxlength="1"  pattern="[0-9]*" />
+        <input type="text" class="otp-input" maxlength="1"  pattern="[0-9]*" />
+
+      </div>
+      <button class="gotRoomBtn">Go to Room</button>
+
+    </div>
+
+  </div>
+
+  <!-- user accont creation  -->
+  <div class="userAcc" style="display: none;" >
+     <!-- image selector  -->
+      <div class="imageSelector">
+        <div class="box">
+          <h1>Select Image</h1>
+          <div class="imgList"></div>
+          <div class="selctBtn">
+            <button class="clsBtn">Close</button>
+            <button class="selectBtn">Select</button>
+          </div>
+        </div>
+      </div>
+      <fieldset class="profileData passcodeContainer">
+        <h1>Create you profile first</h1>
+        <img
+          src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
+          alt=""
+          class="profileImage"
+        />
+        <p class="changePhoto">Change Photo</p>
+
+        <!-- username -->
+
+        <div class="usernameIn">
+          <label for="username">User Name* : </label>
+          <input
+            type="name"
+            name="username"
+            id="username"
+            placeholder="A name thats you friends call you!"
+            require
+          />
+        </div>
+        <!-- email  -->
+        <div class="emailIn">
+          <label for="email">Emaill Adress* : </label>
+          <input
+            type="email"
+            name="email"
+            id="emaill"
+            placeholder="A address get you maill in internet!"
+            required
+          />
+        </div>
+        <!-- show error masg wehn have erro -->
+        <div class="erroMsgPro" style="display: none">
+          <p></p>
+        </div>
+        <button class="nxt-Btn">Setup Profile</button>
+
+        
+      </fieldset>
+
+     
+
+  </div>
+
+  <!-- loading screen  -->
   <div class="loading" style="display: none;">
     <div class="loder"></div>
     <h1>Room in Prepairing...</h1>
@@ -61,28 +139,84 @@
             <h1>Online Users</h1>
           </div>
 
-        </div>
-       
-
-     
-        
+        </div> 
       </div>
     </div>
 
     
     <script>
+        const roomId = {{.}} //get room id from go backend 
+        let roomData
         setLoadingScreen(true)
-        const roomID = {{.}} //get room id from go backend 
-        //get userdata from local storage
-        // is user is null show user data input screen 
-        // get room data 
-        // res is unautherized show  passcode input screen 
-        // res is notfound show invalid room 
-         
+        roomData = initData(roomId)
+
         
-        const video = loadVideo(roomData.streamUrl)
+        
+        async function initData(roomId){
+         
+          //get userdata from local storage and validate user
+          const localUser = await getUser()
+          if (!localUser){
+            // show user create screen
+            showUserModel(true) 
+            console.log("no user")
+            
+          }
+
+          const user = JSON.parse(localUser)
+          if (!user){
+            // show user create screen
+            showUserModel(true)
+            return
+          }
+
+           // cheak user had alredy enterd this room 
+          let room = roomLocal()
+          if (room && room.id === roomId){
+            setLoadingScreen(false) //temp loded
+            return room
+          }
+ 
+
+          // get room data is use valid 
+          const roomData =  await getRoom(roomId)
+          if (roomData.status == 401){
+            showPasscodeModel(true)
+            return
+          }
+
+          if (!(roomData.status == 401 || roomData.status == 200)){
+            // show room is notfound 
+            return
+          }
+
+          // is get room data succes 
+          room = await roomData.json()
+          if(room){
+            setLoadingScreen(false)
+            return room
+          }
+          return null
+
+        }
+
+
+        // set room to local storage and getroom data in locak storage 
+       
+        function roomLocal(room = null) {
+          if (room) {
+            localStorage.setItem("x_roomData", JSON.stringify(room));
+            return room;
+          }
+
+          const saved = localStorage.getItem("x_roomData");
+          return saved ? JSON.parse(saved) : null;
+        }
+
+                
+        const video = loadVideo("https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4")
         video.play()
-        setLoadingScreen(false)
+        // setLoadingScreen(false)
 
         function setLoadingScreen(isLoading){
           const loadingScreen = document.querySelector(".loading")
@@ -96,6 +230,277 @@
             return video
 
         }
+
+      // get users from localStorage and validate user 
+      async function getUser() {
+        const user = localStorage.getItem("x_user");
+        // local storage not have already user send null
+        if (!user) {
+          return null;
+        }
+        // sendvalidate api
+
+        try {
+          const res = await fetch("/api/validate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: user,
+          });
+
+          const userData = await res.json();
+          
+
+          // cheak localy user id  if returend is valid  parese user
+          if (!userData.id) {
+            localStorage.removeItem("x_user")
+            return null;
+          }
+
+          // is not
+          // remove invalid userdate from localStorage
+          // localStorge.removeItem("x_user");
+          return user;
+        } catch (e) {
+          console.log(e);
+          return null;
+        }
+      }
+
+      function getRoom(roomId, passcode = ""){
+        try{
+          // call api 
+          const res = fetch(`/api/room/${roomId}`,{
+            method:"POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              "passcode": passcode,
+            })
+          })
+
+          return res
+
+
+
+        }catch(e){
+          return null
+
+        }
+      }
+
+      // pascode model 
+      const passcodeInp = document.querySelectorAll(".otp-input")
+      const passcodeModel = document.querySelector('.passcode')
+      const passcodeSubBtn = document.querySelector('.gotRoomBtn')
+
+      // handle 4 inputs 
+      passcodeInp.forEach((inp,indx) => {
+        inp.addEventListener("input",(e)=>{
+          if(inp.value && indx < passcodeInp.length -1){
+            passcodeInp[indx +1].focus();
+          }
+        })
+        // handels back and enter 
+        inp.addEventListener("keydown",(e)=>{
+          if(e.key ==  "Backspace" && !inp.value && indx > 0){
+            passcodeInp[indx -1].focus()
+          }
+          if(e.key == "Enter"){
+            passcodeSubBtn.click()
+          }
+        })
+
+        // handler paste
+        inp.addEventListener("paste",(e)=>{
+          e.preventDefault();
+
+          const pastedData = e.clipboardData.getData("text").slice(0,4)
+          pastedData.split("").forEach((char,i)=>{
+            if (passcodeInp[i]) passcodeInp[i].value = char
+          })
+          const nextIndex = Math.min(pastedData.length, passcodeInp.length-1);
+          passcodeInp[nextIndex].focus()
+        }) 
+
+        
+      });
+
+      // format input data as one string 
+      function getPasscode(){
+        return Array.from(passcodeInp).map((inp)=>inp.value).join("")
+
+      }
+      // passcode model show handler
+      function showPasscodeModel(show=false){
+        passcodeModel.style.display = show ? "flex" : "none"
+      }
+
+      // handle passcode submit 
+
+
+      passcodeSubBtn.addEventListener("click", async()=>{
+        const passcode = getPasscode()
+        if (passcode.length !== 4) return
+
+        const res = await getRoom(roomId,passcode)
+        if (res && res.status === 200){
+          
+          const room = await res.json()
+          roomLocal(room)
+          roomData = room 
+
+          showPasscodeModel(false)
+        }else{
+          showPasscodeModel(true)
+        }
+      })
+
+
+      // user profile management ----------------------
+            const profilePictureList = [
+        "Alien_drinking.jpg",
+        "Bear_wearing_popcorn_hat.jpg",
+        "Bulldog_boss_holding_cinema_ticket.jpg",
+        "Cat_wearing_headphones_holding.jpg",
+        "Cat_wearing_tiara_and_glasses.jpg",
+        "Dragon_popping_popcorn.jpg",
+        "Lion_wearing_3D_glasse.jpg",
+        "Marshmallow_wearing_VR_goggles_.jpg",
+        "Monkey_eating_bananas_and_popcorn.jpg",
+        "Monkey_prince_holding_golden_banana.jpg",
+        "Ninja_King_holding_popcorn.jpg",
+        "Owl_wizard_holding_wand.jpg",
+        "Panda_eating_popcorn_wearinga.jpg",
+        "Pizza_holding_cinema_ticket.jpg",
+        "Pug_wearing_.jpg",
+        "Purple_ghost_eating_nachos.jpg",
+        "Robot_holding_media_remote.jpg",
+        "Wolf_film_director_holding.jpg",
+      ];
+      let userId 
+      let username 
+      let email  
+      let profilePicture;
+
+      const imageContainer = document.querySelector(`.profileImage`);
+      const imageList = document.querySelector(`.imgList`);
+      const defDP = profilePictureList[2];
+      const changePhoto = document.querySelector(`.changePhoto`);
+      let selectedImage = `/static/profile_pitures/${profilePictureList[1]}`;
+
+
+      // imageSelector
+      const ImageSelctorModel = document.querySelector(`.imageSelector`);
+      
+      changePhoto.addEventListener("click", () => {
+        ImageSelctorModel.classList.add("active");
+      });
+
+      const selctBtn = document.querySelector(`.selectBtn`);
+      const clsBtn = document.querySelector(`.clsBtn`);
+
+      selctBtn.addEventListener("click", () => {
+        closeImageModel();
+      });
+      clsBtn.addEventListener("click", () => {
+        closeImageModel();
+      });
+
+
+      // set default image to imagecontainer
+      imageContainer.src = `/static/profile_pitures/${defDP}`;
+
+      // list all images
+      let imgCount = 0;
+
+      profilePictureList.forEach((img) => {
+        const image = ` /static/profile_pitures/${img}`;
+        const item = document.createElement("img");
+
+        item.src = image;
+        item.className = `image_${imgCount}`;
+        // when click on image handler
+        item.addEventListener("click", () => {
+          selectedImage = image;
+          imageContainer.src = image;
+
+          const prevSelected = document.querySelector(".imgList .selected");
+          if (prevSelected) {
+            prevSelected.classList.remove("selected");
+          }
+          item.classList.add("selected");
+        });
+        imageList.appendChild(item);
+        imgCount++;
+      });
+
+      function closeImageModel() {
+        ImageSelctorModel.classList.remove("active");
+      }
+
+      // user setup handle  
+
+      const setupBtn = document.querySelector(`.nxt-Btn`) 
+      setupBtn.addEventListener('click', async()=>{
+        const usernameInp = document.querySelector(`#username`)
+        const emailInp = document.querySelector(`#emaill`)
+
+
+        username = usernameInp.value.trim()
+        email = emailInp.value.trim()
+        profilePicture = selectedImage
+
+        // cheack data is emty 
+        if (username == " " || email == " "){
+          return //nothing do 
+
+        }
+
+        try{
+          const res = await fetch("/api/user",{
+            method:"POST",
+            body: JSON.stringify({
+              username,
+              email,
+              profilePicture
+            })
+
+          })
+
+          if (res.status !== 200){
+            alert("Inputs are misising")
+            return
+          }
+
+          const user = await res.json()
+
+          if (user){
+            // save user in db 
+            localStorage.setItem("x_user", JSON.stringify(user))
+            // re init room 
+            initData(roomId)
+            // hide user model 
+            showUserModel(false)
+
+
+          }
+
+        }catch (e){
+          //show errr
+          console.log(e)
+        }
+
+
+      })
+
+      function showUserModel(show=false){
+        const userModel = document.querySelector(`.userAcc`)
+        userModel.style.display = show ? "flex" : "none"
+      }
+
 
 
 

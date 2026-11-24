@@ -91,9 +91,10 @@ func main() {
 
 	// api routes
 	r.HandleFunc("/api/room", logging(a.CreateRoom))
-	r.HandleFunc("/api/room/{roomId}", logging(a.RoomHandler)).Methods("GET")
+	r.HandleFunc("/api/room/{roomId}", logging(a.RoomHandler)).Methods("POST")
 	r.HandleFunc("/sync/{roomId}", logging(api.SyncRoom))
 	r.HandleFunc("/api/validate", logging(a.ValidateUser))
+	r.HandleFunc("/api/user", logging(a.CreateUser)).Methods("POST")
 
 	fmt.Printf("Server in runnig : http://localhost:%s \n", port)
 	http.ListenAndServe(fmt.Sprintf(":%v", port), r)
