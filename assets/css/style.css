@@ -7,6 +7,7 @@ body {
   color: white;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 0px 128px;
+  overflow-x: hidden;
 }
 
 a {
@@ -788,7 +789,27 @@ div .creatingRoom .lable {
     padding: 10px 20px;
   }
 
-  /* create room  */
+  /* create room    & forms */
+  fieldset{
+    margin: 1.5em;
+    padding: 20px;
+
+   }
+  fieldset h1{
+    font-size: 1.6rem;
+  }
+  fieldset div input{
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+
+  }
+  fieldset .nxt-Btn,
+  .createRoomBtn,
+  .openRoomBtn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+  
   
   /* room  */
   .videoPlayer{
@@ -847,7 +868,29 @@ div .creatingRoom .lable {
     text-align: center;
   }
 
-  /* create room  */
+  /* create room  & form */
+  fieldset {
+    margin: 1em;
+    padding: 16px;
+  }
+  fieldset h1 {
+    font-size: 1.4rem;
+  }
+
+  .profileImage {
+    width: 96px;
+    height: 96px;
+  }
+
+  .imgList {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+  
+  .imgList img {
+    width: 80px;
+    height: 80px;
+  }
+
   
   /* room  */
   .videoPlayer{
@@ -902,7 +945,48 @@ div .creatingRoom .lable {
     padding: 8px 16px;
   }
 
-  /* create room  */
+  /* create room  & form */
+  fieldset {
+    margin: 0.5em;
+    padding: 12px;
+    gap: 0.8em;
+  }
+  fieldset h1 {
+    font-size: 1.2rem;
+    padding: 0.5rem 0rem;
+  }
+  fieldset div lable{
+    font-size: 0,9rem;
+
+  }
+
+  fieldset div input{
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .profileImage {
+    width:80px;
+    height: 80px;
+  }
+
+  .imgList {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 4px;
+  }
+  
+  
+  .imgList img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .creatingRoom,
+  .roomCreated {
+    margin: 1em;
+    padding: 16px;
+    gap: 2rem;
+  }
   
   /* room  */
   .videoPlayer{
