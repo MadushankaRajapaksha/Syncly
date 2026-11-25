@@ -709,3 +709,210 @@ div .creatingRoom .lable {
   border-right-color: #3a3f9d;
   animation: spin 0.9s linear infinite;
 }
+
+
+/* media querys  - responsive */
+
+/* lager descktop screen s 
+*/
+
+@media screen  and (min-width:1200px){
+  body{
+    padding: 0px 128px;
+  }
+
+  .hero{
+    padding: 8em 240px;
+  }
+  
+  
+}
+
+/* descktop screens  */
+
+@media screen  and (max-width:1199px){
+  body{
+    padding: 0px 64px;
+  }
+
+  .hero{
+    padding: 8em 120px;
+  }
+
+  .hero h1{
+    font-size: 4em;
+  }
+
+  .videoPlayer{
+    min-width: 720px;
+  }
+  
+  
+}
+
+/* tablets  */
+@media screen  and (max-width:991px){
+  body{
+    padding: 0px 32px;
+  }
+  nav{
+    font-size: 1rem;
+    padding: 16px 0px;
+  }
+
+  nav ul{
+    gap: 0.5rem;
+
+  }
+
+  nav a{
+    padding: 4px 8px;
+    font-size: 0.9rem;
+
+  }
+
+  .hero{
+    padding: 4em 60px;
+  }
+
+  .hero h1{
+    font-size: 3em;
+  }
+  .hero h3{
+    font-size: 1.1em;
+  }
+
+  .hero .cta .create,
+  .hero .cta .features {
+    font-size: 1.1em;
+    padding: 10px 20px;
+  }
+
+  /* create room  */
+  
+  /* room  */
+  .videoPlayer{
+    min-width: 720px;
+  }
+  
+  
+}
+
+
+
+/* tablets portrait  */
+@media screen  and (max-width:767px){
+  body{
+    padding: 0px 64px;
+  }
+  nav{
+     
+  
+    padding: 16px 16px;
+  }
+  nav .items{
+    display: none;
+  }
+
+  nav ul{
+    flex-wrap: wrap;
+    justify-content: center;
+
+  }
+
+  nav a{
+    padding: 4px 8px;
+    font-size: 0.9rem;
+
+  }
+
+  .hero{
+    padding: 3em 20px;
+  }
+
+  .hero h1{
+    font-size: 2.5em;
+  }
+  .hero h3{
+    font-size: 1em;
+  }
+  .hero .cta {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero .cta .create,
+  .hero .cta .features {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* create room  */
+  
+  /* room  */
+  .videoPlayer{
+    min-width: 720px;
+  }
+  
+  
+}
+
+
+
+
+
+
+/* mobile screens  */
+@media screen  and (max-width:767px){
+  body{
+    padding: 0px 8px;
+  }
+  nav{
+    font-size: 0.9rem;
+  
+ 
+  }
+
+  nav h1{
+    font-size: 1.2rem;
+  }
+
+  nav a{
+    padding: 3px 6px;
+    font-size: 0.8rem;
+
+  }
+  
+
+  .hero{
+    padding: 2em 10px;
+  }
+
+  .hero h1{
+    font-size: 2em;
+  }
+  .hero h3{
+    font-size: 0.9em;
+  }
+ 
+
+  .hero .cta .create,
+  .hero .cta .features {
+    font-size: 1em;
+    padding: 8px 16px;
+  }
+
+  /* create room  */
+  
+  /* room  */
+  .videoPlayer{
+    min-width: 720px;
+  }
+  
+  
+}
+
+
+
+
+
