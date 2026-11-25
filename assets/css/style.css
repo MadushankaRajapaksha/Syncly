@@ -423,7 +423,7 @@ div .creatingRoom .lable {
 }
 .chatCoantianer {
   background-color: antiquewhite;
-
+  overflow-y: auto;
   border: 2px solid rgb(86, 76, 76);
   width: 100%;
 }
@@ -453,7 +453,9 @@ div .creatingRoom .lable {
   gap: 4px;
 }
 .mesageShow {
-  height: 70%;
+  min-height: 0;
+  height: 460px;
+  overflow-y: auto;
 }
 .msgInp input {
   font-size: 1rem;
@@ -489,6 +491,10 @@ div .creatingRoom .lable {
   height: 100%;
   background-color: antiquewhite;
   border: 2px solid rgb(86, 76, 76);
+  min-height: 0;
+  height: 160px;
+  overflow-y: auto;
+  
 }
 .onlineUsersContainer .header {
   padding: 12px;
@@ -505,9 +511,52 @@ div .creatingRoom .lable {
   font-size: 1.2rem;
 }
 
+.onlineUsersContainer img{
+  width: 4rem;
+}
+.onlineUsersList{
+  display: flex;
+  gap: 12px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 12px;
+
+  
+  
+  
+  
+
+}
+
+.onlineUsersContainer  .user {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 12px;
+  background-color: white;
+  box-sizing: border-box;
+
+}
+
+ 
+.onlineUsersContainer .onlineUsersList .user .usernameL {
+  font-size: 1.2em;
+  font-weight: 600;
+
+}
+.onlineUsersContainer .onlineUsersList .user .secs span {
+  font-size: 0.9em;
+  font-weight: 600;
+  padding: 0px 8px;
+  border-radius: 12px;
+  border: solid black 1px;
+  margin: 2px  ;
+
+}
+
 .msgBox {
   display: flex;
-  flex-direction: col;
+  flex-direction: row;
   background-color: whitesmoke;
   padding: 6px;
   margin: 6px;

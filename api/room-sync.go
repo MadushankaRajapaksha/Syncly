@@ -27,8 +27,9 @@ type UserInfo struct {
 
 type VideoState struct {
 	Action      string  `json:"action"`
+	VideoUrl    string  `json:"videoUrl,omitempty"`
 	IsPlaying   bool    `json:"isPlaying"`
-	CurrentTime float64 `json:currentTime`
+	CurrentTime float64 `json:"currentTime"`
 }
 type Message struct {
 	Text      string `json:"text"`
