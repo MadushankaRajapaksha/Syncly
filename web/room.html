@@ -93,10 +93,41 @@
       <div class="roomMainGrid">
         <div class="videoContainer">
           <div class="video">
-            <div class="videoPlayer" id="videoPlayer">
-              <video src="..." controls></video>
+            <div class="videoPlayer videoPlayerWraper" id="videoPlayer">
+              <video class="syncVideo">
+                <source type="video/mp4">
+                <track id="subTrack" kind="subtitles" >
+
+              </video>
+
+              <!-- SUBTITLE OVERLAY  -->
+              <div></div>
+
+              <!-- controls  -->
+              <div class="controlsBar">
+                <div class="process">
+                  <input type="range" id="seekBar" class="seekBar" min="0" max="100" value="0" step="0.1" />
+
+                </div>
+
+                <div class="buttons">
+                  <div class="left">
+                    <button class="ctrl-btn playPauseBtn">▶</button>
+                    <span class="timeDisplay">00:00 / 00:00</span>
+                  </div>
+                  <div class="right">
+                    <button class="ctrl-btn active subToggleBtn" >CC: ON</button>
+                    <button class="ctrl-btn fullscreenBtn" >⛶</button>
+
+                  </div>
+                </div>
+
+              </div>
+
             </div>
           </div>
+
+
         </div>
         <div class="chatCoantianer">
           <div class="header">
@@ -121,12 +152,14 @@
         </div>
       </div>
     </div>
+    <script src="/static/scripts/player.js"></script>
 
     <script>
               const roomId = {{.}} //get room id from go backend
               let roomData = null
               let ws = null
-              const video = document.querySelector(`#videoPlayer video`)
+              const video = document.querySelector(`.syncVideo`)
+               const videoSoruce = document.querySelector(".syncVideo source")
               setLoadingScreen(true)
               initData(roomId)
 
@@ -386,7 +419,7 @@
               let isRemoteSync = false;
 
               function syncVideo(v){
-                const video = document.querySelector(`#videoPlayer video`)
+                const video = document.querySelector(`.syncVideo`)
                 isRemoteSync = true;
 
 
@@ -396,7 +429,7 @@
                     const newPath = new URL(v.videoUrl, window.location.origin).pathname;
 
                     if(currentPath !== newPath){
-                      video.src = v.videoUrl
+                      videoSoruce.src = v.videoUrl
                       video.addEventListener("loadedmetadata", () => {
                           applyVideoSync(v);
                       }, { once: true });
@@ -405,8 +438,8 @@
                     }
 
                   }catch (e){
-                    if (video.src !== v.videoUrl){
-                      video.src = v.videoUrl;
+                    if (videoSoruce.src !== v.videoUrl){
+                      videoSoruces.src = v.videoUrl;
                       video.addEventListener("loadedmetadata", () => applyVideoState(v), { once: true });
                       video.load();
                       return;
@@ -418,7 +451,7 @@
               }
 
               function applyVideoSync(v){
-                const video = document.querySelector(`#videoPlayer video`)
+                const video = document.querySelector(`.syncVideo`)
 
                 if (typeof v.currentTime === "number" && !isNaN(v.currentTime)
                     && Math.abs(video.currentTime - v.currentTime) > 0.5) {
@@ -446,10 +479,7 @@
 
               }
 
-
-
-
-
+ 
 
               // set room to local storage and getroom data in locak storage
 
@@ -475,7 +505,8 @@
               // loadvideo from url
             function loadVideo(src){
                 // loadvideo to video element
-                video.src = src
+                const videoSoruce = document.querySelector("video source")
+                videoSoruce.src = src
                 video.load()
 
                 // broadcast loadvideo
@@ -501,7 +532,7 @@
                 sendWs("video",{
                   video: {
                     action: "play",
-                    videoUrl: video.src,
+                    videoUrl: videoSoruce.src,
                     currentTime: video.currentTime,
                     isPlaying: true
                   }
@@ -517,7 +548,7 @@
                 sendWs("video",{
                   video: {
                     action: "pause",
-                      videoUrl: video.src,
+                      videoUrl: videoSoruce.src,
                       currentTime: video.currentTime,
                       isPlaying: false
                           }
@@ -532,7 +563,7 @@
               sendWs("video", {
                 video: {
                   action: "seek",
-                  videoUrl: video.src,
+                  videoUrl: videoSoruce.src,
                   currentTime: video.currentTime,
                   isPlaying: !video.paused
                 }

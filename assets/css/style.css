@@ -551,12 +551,93 @@ div .creatingRoom .lable {
   
    
 }
+
+.videoPlayerWraper{
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  
+}
+/* hide browser default subttiles  */
+video::cue{
+  opacity: 0;
+}
+
+
+
 .videoPlayer video {
   width: 100%;
   height: 100%;
   max-width: 100%;
   object-fit: contain;
+  display: block;
 }
+
+.controlsBar{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  padding: 16px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 20;
+
+}
+
+.process{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.seekBar{
+  width: 100%;
+  height: 8px;
+  accent-color: #2563eb;
+  cursor: pointer;
+  background-color: wheat;
+
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f8fafc;
+  font-size: 14px;
+
+}
+
+.left, .right{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ctrl-btn{
+  background: rgba(255, 255, 255, 0.12);
+  color: wheat;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.2s;
+
+}
+
+.ctrl-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.ctrl-btn.active {
+  background: #2563eb;
+}
+
+
 
 .onlineUsersContainer {
   width: 100%;
