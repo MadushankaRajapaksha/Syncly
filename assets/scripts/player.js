@@ -8,6 +8,11 @@ const seekBar = document.querySelector(".seekBar");
 const timeDisplay = document.querySelector(".timeDisplay");
 const subtitlesToggle = document.querySelector(".subToggleBtn");
 
+let isSubtitlesEnabled = true
+const subOverlay = document.querySelector(".subOverlay");
+const subText = document.querySelector(".subText");
+const fullscreenBtn = document.querySelector(".fullscreenBtn");
+
 // handle play pause 
 
 function togglePlay() {
@@ -52,4 +57,44 @@ vid.addEventListener("timeupdate",()=>{
 seekBar.addEventListener("input", () => {
   video.currentTime = seekBar.value;
 });
+
+vid.addEventListener("loadedmetadata",()=>{
+    const track = vid.loadedmetadata;
+    if(!track) return
+
+    // hide htm render subtitle 
+    track.mode = "hidden"
+    // track subtitles ad set text in to sub overlat text 
+    track.addEventListener("cuechange",()=>{
+        const activeCue = track.activeCues[0];
+        if(activeCue && isSubtitlesEnabled){
+            subText.textContent = activeCue.text   
+        }else{
+            subText.textContent = ""
+        }
+    })
+});
+
+// hadle subtitle on off 
+subtitlesToggle.addEventListener("click",()=>{
+    isSubtitlesEnabled = !isSubtitlesEnabled
+
+    subtitlesToggle.textContent = isSubtitlesEnabled ? "CC: ON" : "CC: OFF";
+    subtitlesToggle.classList.toggle("active", isSubtitlesEnabled);
+
+    if (!isSubtitlesEnabled) {
+      subText.textContent = "";
+    }
+})
+
+// handler full screen 
+fullscreenBtn.addEventListener("click",()=>{
+    subToggleBtn.textContent = subtitlesEnabled ? "CC: ON" : "CC: OFF";
+    subToggleBtn.classList.toggle("active", subtitlesEnabled);
+
+    if (!subtitlesEnabled) {
+      subtitleText.textContent = "";
+    }
+
+})
 

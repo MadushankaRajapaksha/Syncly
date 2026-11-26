@@ -101,7 +101,9 @@
               </video>
 
               <!-- SUBTITLE OVERLAY  -->
-              <div></div>
+              <div class="subOverlay">
+                <span class="subText"></span>
+              </div>
 
               <!-- controls  -->
               <div class="controlsBar">
@@ -159,7 +161,7 @@
               let roomData = null
               let ws = null
               const video = document.querySelector(`.syncVideo`)
-               const videoSoruce = document.querySelector(".syncVideo source")
+              const videoSoruce = document.querySelector(".syncVideo source")
               setLoadingScreen(true)
               initData(roomId)
 
@@ -219,7 +221,6 @@
                 room = await roomDataL.json()
                 if(!room){
                   setLoadingScreen(true)
-
 
                   return nil
                 }
@@ -326,6 +327,8 @@
                 const userProfilePicture = document.querySelector(`.profileImageroom`)
 
                 loadVideo(data.room.streamUrl)
+                loadSubtitles(data.room.subtitlesUrl)
+
                 roomName.innerHTML = data.room.name
                 userProfilePicture.src = data.user.profilePicture
 
@@ -522,6 +525,89 @@
 
             }
 
+            // load subtitle from url 
+            async function loadSubtitles(url){
+              if (!url) return
+              console.log(url)
+
+              // fetch srt content 
+              try{
+                const res = await fetch(url)
+                if(!res.ok){
+                  console.log("err sub fetch")
+                }
+
+                let subContent = await res.text();
+
+                // convert sub is not webvvt to srt 
+                if(!subContent.trim().startsWith("WEBVTT")){
+                  subContent = convertSrtToVtt(subContent)
+
+                }
+
+                // save data with blob 
+                const vttBlob = new Blob([subContent], { type: "text/vtt" });
+                const vttBlobUrl = URL.createObjectURL(vttBlob);
+
+                // remove already loaded tracks 
+                const existingTracks = video.querySelectorAll("track");
+                existingTracks.forEach((t) => {
+                  if (t.src.startsWith("blob:")) {
+                    URL.revokeObjectURL(t.src);  
+                  }
+                  t.remove();
+                });
+
+                // append new track 
+                const track = document.createElement("track")
+                track.kind = "subtitles"
+                track.label = "en"
+                track.lang = "en"
+                track.src = vttBlobUrl
+                track.default = true
+
+                // append 
+                video.appendChild(track)
+
+                track.addEventListener("load",()=>{
+                  const textTrack = video.textTracks[0];
+                  if (!textTrack) return;
+
+                  textTrack.mode = "showing"
+
+                  const subttileText = document.querySelector(".subText")
+
+                  if(subttileText){
+                    track.mode = "hidden"
+                    textTrack.addEventListener("cuechange", () => {
+                      const activeCue = textTrack.activeCues[0];
+                      subttileText.textContent = activeCue ? activeCue.text : "";
+                    });
+                    
+
+                  }
+
+                })
+                
+                console.log("subtitle loaded")
+
+              }catch (e){
+                console.log("subtitle load err ; ", e)
+              }
+
+            }
+            // convert srt to webvtt  format 
+
+            function convertSrtToVtt(srtText) {
+              // Normalize Windows (\r\n) line endings to Unix (\n)
+              let vtt = srtText.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+              // Replace comma in SRT timestamps (00:01:23,456) with a dot (00:01:23.456)
+              vtt = vtt.replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g, "$1.$2");
+
+              // Prepend the required WEBVTT header
+              return "WEBVTT\n\n" + vtt.trim();
+            }
             // handler video actions  --------------------------
 
             if (video){

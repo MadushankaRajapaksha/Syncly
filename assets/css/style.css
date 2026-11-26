@@ -562,8 +562,33 @@ div .creatingRoom .lable {
 video::cue{
   opacity: 0;
 }
+.subOverlay{
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86%;
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+
+}
 
 
+.subText{
+  display: inline-block;
+  background-color: rgb(0, 0, 0, 0.78);
+  color: whitesmoke;
+  font-size: 1.1em;
+  line-height: 1.4;
+  padding: 6px 14px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+
+}
+
+.subText:empty{ 
+  display: none;
+}
 
 .videoPlayer video {
   width: 100%;
