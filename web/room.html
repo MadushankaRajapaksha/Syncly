@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{.}} | room</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=553" />
-</head>
-<body>
-
-  <!-- pascode inp model  -->
-  <div class="passcode" style="display: none;">
-    <div class="passcodeContainer">
-      <h1>Enter Passcode</h1>
-      <p>use seacret code you friend sends you</p>
-      <div class="passcodeInpContainer">
-        <input type="text" class="otp-input" maxlength="1"  pattern="[0-9]*" />
-        <input type="text" class="otp-input" maxlength="1"  pattern="[0-9]*" />
-        <input type="text" class="otp-input" maxlength="1"  pattern="[0-9]*" />
-        <input type="text" class="otp-input" maxlength="1"  pattern="[0-9]*" />
-
+    <link rel="stylesheet" href="/static/css/style.css?v=5643" />
+  </head>
+  <body>
+    <!-- pascode inp model  -->
+    <div class="passcode" style="display: none">
+      <div class="passcodeContainer">
+        <h1>Enter Passcode</h1>
+        <p>use seacret code you friend sends you</p>
+        <div class="passcodeInpContainer">
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" />
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" />
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" />
+          <input type="text" class="otp-input" maxlength="1" pattern="[0-9]*" />
+        </div>
+        <button class="gotRoomBtn">Go to Room</button>
       </div>
-      <button class="gotRoomBtn">Go to Room</button>
-
     </div>
 
-  </div>
-
-  <!-- user accont creation  -->
-  <div class="userAcc" style="display: none;" >
-     <!-- image selector  -->
+    <!-- user accont creation  -->
+    <div class="userAcc" style="display: none">
+      <!-- image selector  -->
       <div class="imageSelector">
         <div class="box">
           <h1>Select Image</h1>
@@ -76,761 +72,773 @@
           <p></p>
         </div>
         <button class="nxt-Btn">Setup Profile</button>
-
-        
       </fieldset>
+    </div>
 
-     
-
-  </div>
-
-  <!-- loading screen  -->
-  <div class="loading" style="display: none;">
-    <div class="loder"></div>
-    <h1>Room in Prepairing...</h1>
-
-  </div>
+    <!-- loading screen  -->
+    <div class="loading" style="display: none">
+      <div class="loder"></div>
+      <h1>Room in Prepairing...</h1>
+    </div>
     <nav>
       <h1 class="roomNameH">Room Name</h1>
-       
-       <img
-          src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
-          alt=""
-          class="profileImageroom"
-        />
+
+      <img
+        src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
+        alt=""
+        class="profileImageroom"
+      />
     </nav>
     <div class="roomContent">
+      <div class="roomMainGrid">
         <div class="videoContainer">
-            <div class="video">
-              <video id="syncVideo" class="videoPlayer" width="720" controls></video>
-        
-            
-            </video>
+          <div class="video">
+            <div class="videoPlayer" id="videoPlayer">
+              <video src="..." controls></video>
             </div>
-            <div class="chatCoantianer">
-              <div class="header">
-                <h1>Chat</h1>
-                <p class="onlineCount">online <span class="count">0</span></p>
-
-
-              </div>
-              <div class="mesageShow">
-                 
-
-              </div>
-              <div class="msgInp">
-                <input type="text" class="msgIn" placeholder="your message">
-                <button class="send">send</button>
-              </div>
-                
-            </div>
+          </div>
         </div>
-        <div class="onlineUsersContainer">
+        <div class="chatCoantianer">
           <div class="header">
-            <h1>Online Users</h1>
+            <h1>Chat</h1>
+            <div class="onlineCount">online <span>1</span></div>
           </div>
-
-          <div class="onlineUsersList">
-            
-
+          <div class="mesageShow">
+            <!-- messages -->
           </div>
-
-        </div> 
+          <div class="msgInp">
+            <input type="text" placeholder="your message" />
+            <button>send</button>
+          </div>
+        </div>
+      </div>
+      <div class="onlineUsersContainer">
+        <div class="header">
+          <h1>Online Users</h1>
+        </div>
+        <div class="onlineUsersList">
+          <!-- users -->
+        </div>
       </div>
     </div>
 
-    
     <script>
-        const roomId = {{.}} //get room id from go backend 
-        let roomData = null
-        let ws = null
-        const video = document.querySelector(`#syncVideo`)
-        setLoadingScreen(true)
-        initData(roomId)
-         
+              const roomId = {{.}} //get room id from go backend
+              let roomData = null
+              let ws = null
+              const video = document.querySelector(`#videoPlayer video`)
+              setLoadingScreen(true)
+              initData(roomId)
 
-        async function initData(roomId){
-          //get userdata from local storage and validate user
-          const localUser = await getUser()
-          if (!localUser){
-            // show user create screen
-            showUserModel(true) 
-            console.log("no user")
-            
-          }
 
-          const user = JSON.parse(localUser)
-          if (!user){
-            // show user create screen
+              async function initData(roomId){
+                //get userdata from local storage and validate user
+                const localUser = await getUser()
+                if (!localUser){
+                  // show user create screen
+                  showUserModel(true)
+                  console.log("no user")
 
-            showUserModel(true)
-            return
-          }
+                }
 
-          userData = user
+                const user = JSON.parse(localUser)
+                if (!user){
+                  // show user create screen
 
-           // cheak user had alredy enterd this room 
-          let room = roomLocal()
-          if (room && room.id === roomId){
-             roomData = {
-              user,
-              room
-            }
-            // update Ui 
-          
-            updateUI(roomData)
-            // creat ws connection
-            Sync()
-            setLoadingScreen(false)
-            return  
+                  showUserModel(true)
+                  return
+                }
 
-          }
- 
+                userData = user
 
-          // get room data is use valid 
-          const roomDataL =  await getRoom(roomId)
-          if (roomDataL.status == 401){
-            showPasscodeModel(true)
-            return
-          }
+                 // cheak user had alredy enterd this room
+                let room = roomLocal()
+                if (room && room.id === roomId){
+                   roomData = {
+                    user,
+                    room
+                  }
+                  // update Ui
 
-          if (!(roomDataL.status == 401 || roomDataL.status == 200)){
-            // show room is notfound 
-            return
-          }
+                  updateUI(roomData)
+                  // creat ws connection
+                  Sync()
+                  setLoadingScreen(false)
+                  return
 
-          // is get room data succes 
-          room = await roomDataL.json()
-          if(!room){
-            setLoadingScreen(true)
-             
+                }
 
-            return nil
-          }
 
-          
+                // get room data is use valid
+                const roomDataL =  await getRoom(roomId)
+                if (roomDataL.status == 401){
+                  showPasscodeModel(true)
+                  return
+                }
 
-          // update Ui 
-          roomData = {
-            user,
-            room
-          }
-          updateUI(roomData)
-          
-          
-          // creat ws connection
-          Sync()
-          setLoadingScreen(false)
-          return 
+                if (!(roomDataL.status == 401 || roomDataL.status == 200)){
+                  // show room is notfound
+                  return
+                }
+
+                // is get room data succes
+                room = await roomDataL.json()
+                if(!room){
+                  setLoadingScreen(true)
+
+
+                  return nil
+                }
 
 
 
-        }
-
-         
-        
-        
-        // handle websicket connection 
-        function Sync(){
-            // ws route 
-            setLoadingScreen(true)
-            const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-            const wsUrl = `${protocol}//${window.location.host}/sync/${roomId}`;
-
-            // create ws connection 
-            ws = new WebSocket(wsUrl)
-
-            ws.onopen = () =>{
-              console.log("Connected to room:", roomId);
-              // sendws join 
-              sendWs('join')
-              setLoadingScreen(false)
-            }
-
-            ws.onmessage = (e) =>{
-              const msg = JSON.parse(e.data)
-
-              // hande masages ws braodcasts 
-              switch (msg.type){
-                case "users":
-                  // update online users in UI 
-                   
-                  updateOnlineUsers(msg.onlineUsers)
-                  break
-
-                case "chat":
-                  //update chat
-                   
-                  appendMsgtoChat(msg.sender,msg.chat)
-                  break
-                case "video":
-                case "sync_state":
-                  // handle video syncing 
-                  syncVideo(msg.video)
-                  break;
-                
-              }
-            }
-          // handleclose 
-
-          ws.onclose = () => {
-            console.warn("WebSocket disconnected. Reconnecting in 3s...");
-            setTimeout(Sync, 3000);
-          };
-
-          ws.onerror = (err) => {
-            console.error("WebSocket error:", err);
-          };
-            
-        }
-
-        function sendWs(type,data={}){
-          // cheak ws connection has created
-          if (!ws || ws.readyState !== WebSocket.OPEN) return;
-          
-          const payload = {
-            type: type,
-            roomId: roomId,
-            sender: {
-              userId: roomData.user.userId,
-              username: roomData.user.username,
-              email: roomData.user.email || "",
-              profilePicture: (roomData.user.profilePicture || "").trim()
-            },
-            ...data
-          };
-
-          ws.send(JSON.stringify(payload));
-
-        }
-
-        function updateUI(data){
-        
-          const roomName = document.querySelector(`.roomNameH`)
-          const userProfilePicture = document.querySelector(`.profileImageroom`)
-
-          loadVideo(data.room.streamUrl)
-          roomName.innerHTML = data.room.name
-          userProfilePicture.src = data.user.profilePicture
-
-          return true
-
-        }
-
-        function updateOnlineUsers(users) {
-          // set online user count 
-          const onlineUserCounter = document.querySelector('.onlineCount .count')
-          if (onlineUserCounter) {
-            onlineUserCounter.innerHTML = users.length
-          }
-
-          // list users 
-          const userList = document.querySelector('.onlineUsersList')
-          if (!userList) {
-            console.error('Element .onlineUsersList not found')
-            return
-          }
-
-          userList.innerHTML = '' // Clear previous entries
-
-          users.forEach((u, i) => {
-            const userElement = document.createElement('div')
-            userElement.className = `user u-${i}`
-            userElement.innerHTML = `
-              <img src="${u.profilePicture}" class="userImg" alt="">
-              <div class="secs">
-                <p class="usernameL">${u.userName}</p>
-                <p class="emailL">${u.email}</p>
-                <span> ⬤ Online</span>
-              </div>
-            `
-
-            userList.appendChild(userElement)
-          })
-        }
+                // update Ui
+                roomData = {
+                  user,
+                  room
+                }
+                updateUI(roomData)
 
 
-        // handler masg send 
-        const msgInp = document.querySelector(".msgIn")
-        const sendMsgBtn = document.querySelector(".send")
-
-        sendMsgBtn.addEventListener("click",()=>{
-          if (msgInp.value.trim() == "") return //ignore emty masseges
-
-          let msg = msgInp.value
-          // broadcas all clients 
-          sendWs("chat",{
-            chat: {
-              text: msg,
-              timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-            }
-          })
-
-          // reset input value 
-          msgInp.value = ""
-        })
-
-
-        
-        function appendMsgtoChat(sender,msg){
-          const chatList = document.querySelector(".mesageShow")
-          const msgBox = document.createElement('div')
-
-          msgBox.className = 'msgBox'
-
-
-          msgBox.innerHTML =`
-          <div class="first">
-            <img src="${sender.profilePicture}" class="userImg" alt="">
-          </div>
-          <div class="sec">
-            <p class="username">${sender.userName}</p>
-            <p class="msg">${msg.text}</p> 
-          </div>
-          </p>
-          
-          `
-
-          // add msg to list element 
-          chatList.appendChild(msgBox)
-          // scroolbotum
-          chatList.scrollTop = chatList.scrollHeight;
-
-
-        }
-
-        // sync video 
-        let isRemoteSync = false;
-
-        function syncVideo(v){
-          const video = document.querySelector(`#syncVideo`)
-          isRemoteSync = true;
-
-
-          if (v.videoUrl){
-            try{
-              const currentPath = new URL(video.src).pathname
-              const newPath = new URL(v.videoUrl, window.location.origin).pathname;
-
-              if(currentPath !== newPath){
-                video.src = v.videoUrl
-                video.addEventListener("loadedmetadata", () => {
-                    applyVideoSync(v);
-                }, { once: true });
-                video.load();
+                // creat ws connection
+                Sync()
+                setLoadingScreen(false)
                 return
+
+
+
               }
 
-            }catch (e){
-              if (video.src !== v.videoUrl){
-                video.src = v.videoUrl;
-                video.addEventListener("loadedmetadata", () => applyVideoState(v), { once: true });
-                video.load();
-                return;
+
+
+
+              // handle websicket connection
+              function Sync(){
+                  // ws route
+                  setLoadingScreen(true)
+                  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+                  const wsUrl = `${protocol}//${window.location.host}/sync/${roomId}`;
+
+                  // create ws connection
+                  ws = new WebSocket(wsUrl)
+
+                  ws.onopen = () =>{
+                    console.log("Connected to room:", roomId);
+                    // sendws join
+                    sendWs('join')
+                    setLoadingScreen(false)
+                  }
+
+                  ws.onmessage = (e) =>{
+                    const msg = JSON.parse(e.data)
+
+                    // hande masages ws braodcasts
+                    switch (msg.type){
+                      case "users":
+                        // update online users in UI
+
+                        updateOnlineUsers(msg.onlineUsers)
+                        break
+
+                      case "chat":
+                        //update chat
+
+                        appendMsgtoChat(msg.sender,msg.chat)
+                        break
+                      case "video":
+                      case "sync_state":
+                        // handle video syncing
+                        syncVideo(msg.video)
+                        break;
+
+                    }
+                  }
+                // handleclose
+
+                ws.onclose = () => {
+                  console.warn("WebSocket disconnected. Reconnecting in 3s...");
+                  setTimeout(Sync, 3000);
+                };
+
+                ws.onerror = (err) => {
+                  console.error("WebSocket error:", err);
+                };
+
               }
 
-            }
-          }
-          applyVideoSync(v)
-        }
+              function sendWs(type,data={}){
+                // cheak ws connection has created
+                if (!ws || ws.readyState !== WebSocket.OPEN) return;
 
-        function applyVideoSync(v){
-          const video = document.querySelector(`#syncVideo`)
+                const payload = {
+                  type: type,
+                  roomId: roomId,
+                  sender: {
+                    userId: roomData.user.userId,
+                    username: roomData.user.username,
+                    email: roomData.user.email || "",
+                    profilePicture: (roomData.user.profilePicture || "").trim()
+                  },
+                  ...data
+                };
 
-          if (typeof v.currentTime === "number" && !isNaN(v.currentTime)
-              && Math.abs(video.currentTime - v.currentTime) > 0.5) {
-              video.currentTime = v.currentTime;
-          }
+                ws.send(JSON.stringify(payload));
 
-          // play oause state create 
-          let targetPlaying
-          if (v.action === "play") targetPlaying = true;
-          else if (v.action === "pause") targetPlaying = false;
-          else if (v.action === "seek") targetPlaying = v.isPlaying === true;
-          else if (v.action === "load") targetPlaying = false;
-          else   targetPlaying = v.isPlaying === true;
+              }
+
+              function updateUI(data){
+
+                const roomName = document.querySelector(`.roomNameH`)
+                const userProfilePicture = document.querySelector(`.profileImageroom`)
+
+                loadVideo(data.room.streamUrl)
+                roomName.innerHTML = data.room.name
+                userProfilePicture.src = data.user.profilePicture
+
+                return true
+
+              }
+
+              function updateOnlineUsers(users) {
+                // set online user count
+                const onlineUserCounter = document.querySelector('.onlineCount span')
+                if (onlineUserCounter) {
+                  onlineUserCounter.innerHTML = users.length
+                }
+
+                // list users
+                const userList = document.querySelector('.onlineUsersList')
+                if (!userList) {
+                  console.error('Element .onlineUsersList not found')
+                  return
+                }
+
+                userList.innerHTML = '' // Clear previous entries
+
+                users.forEach((u, i) => {
+                  const userElement = document.createElement('div')
+                  userElement.className = `user u-${i}`
+                  userElement.innerHTML = `
+                    <img src="${u.profilePicture}" class="userImg" alt="">
+                    <div class="secs">
+                      <p class="usernameL">${u.userName}</p>
+                      <p class="emailL">${u.email}</p>
+
+                    </div>
+                  `
+
+                  userList.appendChild(userElement)
+                })
+              }
 
 
-          if (targetPlaying) {
-              video.play().catch((err) => console.warn("Autoplay blocked:", err));
-          } else {
-              video.pause();
-          }
+              // handler masg send
+              const msgInp = document.querySelector(".msgInp input")
+              const sendMsgBtn = document.querySelector(".msgInp button")
 
-          setTimeout(() => { isRemoteSync = false; }, 500);
+              sendMsgBtn.addEventListener("click",()=>{
+                if (msgInp.value.trim() == "") return //ignore emty masseges
+
+                let msg = msgInp.value
+                // broadcas all clients
+                sendWs("chat",{
+                  chat: {
+                    text: msg,
+                    timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+                  }
+                })
+
+                // reset input value
+                msgInp.value = ""
+              })
 
 
-          
-        }    
+
+              function appendMsgtoChat(sender,msg){
+                const chatList = document.querySelector(".mesageShow")
+                const msgBox = document.createElement('div')
+
+                msgBox.className = 'msgBox'
 
 
+                msgBox.innerHTML =`
+                <div class="first">
+                  <img src="${sender.profilePicture}" class="userImg" alt="">
+                </div>
+                <div class="sec">
+                  <p class="username">${sender.userName}</p>
+                  <p class="msg">${msg.text}</p>
+                </div>
+                </p>
 
-                      
+                `
+
+                // add msg to list element
+                chatList.appendChild(msgBox)
+                // scroolbotum
+                chatList.scrollTop = chatList.scrollHeight;
 
 
-        // set room to local storage and getroom data in locak storage 
-       
-        function roomLocal(room = null) {
-          if (room) {
-            localStorage.setItem("x_roomData", JSON.stringify(room));
-            return room;
-          }
+              }
 
-          const saved = localStorage.getItem("x_roomData");
-          return saved ? JSON.parse(saved) : null;
-        }
+              // sync video
+              let isRemoteSync = false;
 
-                
-        
-        // setLoadingScreen(false)
+              function syncVideo(v){
+                const video = document.querySelector(`#videoPlayer video`)
+                isRemoteSync = true;
 
-        function setLoadingScreen(isLoading){
-          const loadingScreen = document.querySelector(".loading")
-          loadingScreen.style.display = isLoading ? "flex" : "none"
-        }
-        
-        // loadvideo from url 
-      function loadVideo(src){
-          // loadvideo to video element 
-          video.src = src
-          video.load()
 
-          // broadcast loadvideo 
-          sendWs("video", {
-            video: {
-              action: "load",
-              videoUrl: src,
-              currentTime: 0,
-              isPlaying: false
-            }
-          });
-          
+                if (v.videoUrl){
+                  try{
+                    const currentPath = new URL(video.src).pathname
+                    const newPath = new URL(v.videoUrl, window.location.origin).pathname;
 
-      }
-
-      // handler video actions  --------------------------
-
-      if (video){
-        // handle play
-        video.addEventListener("play",()=>{
-          if (isRemoteSync) return
-          // broadcast clients play 
-          sendWs("video",{
-            video: {
-              action: "play",
-              videoUrl: video.src,
-              currentTime: video.currentTime,
-              isPlaying: true
-            }
-
-          })
-
-        }) 
-
-        // handle pause 
-        video.addEventListener("pause",()=>{
-          if (isRemoteSync) return
-          // broadcast clients play 
-          sendWs("video",{
-            video: {
-              action: "pause",
-                videoUrl: video.src,
-                currentTime: video.currentTime,
-                isPlaying: false
+                    if(currentPath !== newPath){
+                      video.src = v.videoUrl
+                      video.addEventListener("loadedmetadata", () => {
+                          applyVideoSync(v);
+                      }, { once: true });
+                      video.load();
+                      return
                     }
 
-          })
+                  }catch (e){
+                    if (video.src !== v.videoUrl){
+                      video.src = v.videoUrl;
+                      video.addEventListener("loadedmetadata", () => applyVideoState(v), { once: true });
+                      video.load();
+                      return;
+                    }
 
-        })
+                  }
+                }
+                applyVideoSync(v)
+              }
 
-        // handle seek 
-        video.addEventListener("seeked", () => {
-        if (isRemoteSync) return;
-        sendWs("video", {
-          video: {
-            action: "seek",
-            videoUrl: video.src,
-            currentTime: video.currentTime,
-            isPlaying: !video.paused
-          }
-        });
-      });
-      }
+              function applyVideoSync(v){
+                const video = document.querySelector(`#videoPlayer video`)
 
-      // get users from localStorage and validate user 
-      async function getUser() {
-        const user = localStorage.getItem("x_user");
-        // local storage not have already user send null
-        if (!user) {
-          return null;
-        }
-        // sendvalidate api
+                if (typeof v.currentTime === "number" && !isNaN(v.currentTime)
+                    && Math.abs(video.currentTime - v.currentTime) > 0.5) {
+                    video.currentTime = v.currentTime;
+                }
 
-        try {
-          const res = await fetch("/api/validate", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: user,
+                // play oause state create
+                let targetPlaying
+                if (v.action === "play") targetPlaying = true;
+                else if (v.action === "pause") targetPlaying = false;
+                else if (v.action === "seek") targetPlaying = v.isPlaying === true;
+                else if (v.action === "load") targetPlaying = false;
+                else   targetPlaying = v.isPlaying === true;
+
+
+                if (targetPlaying) {
+                    video.play().catch((err) => console.warn("Autoplay blocked:", err));
+                } else {
+                    video.pause();
+                }
+
+                setTimeout(() => { isRemoteSync = false; }, 500);
+
+
+
+              }
+
+
+
+
+
+
+              // set room to local storage and getroom data in locak storage
+
+              function roomLocal(room = null) {
+                if (room) {
+                  localStorage.setItem("x_roomData", JSON.stringify(room));
+                  return room;
+                }
+
+                const saved = localStorage.getItem("x_roomData");
+                return saved ? JSON.parse(saved) : null;
+              }
+
+
+
+              // setLoadingScreen(false)
+
+              function setLoadingScreen(isLoading){
+                const loadingScreen = document.querySelector(".loading")
+                loadingScreen.style.display = isLoading ? "flex" : "none"
+              }
+
+              // loadvideo from url
+            function loadVideo(src){
+                // loadvideo to video element
+                video.src = src
+                video.load()
+
+                // broadcast loadvideo
+                sendWs("video", {
+                  video: {
+                    action: "load",
+                    videoUrl: src,
+                    currentTime: 0,
+                    isPlaying: false
+                  }
+                });
+
+
+            }
+
+            // handler video actions  --------------------------
+
+            if (video){
+              // handle play
+              video.addEventListener("play",()=>{
+                if (isRemoteSync) return
+                // broadcast clients play
+                sendWs("video",{
+                  video: {
+                    action: "play",
+                    videoUrl: video.src,
+                    currentTime: video.currentTime,
+                    isPlaying: true
+                  }
+
+                })
+
+              })
+
+              // handle pause
+              video.addEventListener("pause",()=>{
+                if (isRemoteSync) return
+                // broadcast clients play
+                sendWs("video",{
+                  video: {
+                    action: "pause",
+                      videoUrl: video.src,
+                      currentTime: video.currentTime,
+                      isPlaying: false
+                          }
+
+                })
+
+              })
+
+              // handle seek
+              video.addEventListener("seeked", () => {
+              if (isRemoteSync) return;
+              sendWs("video", {
+                video: {
+                  action: "seek",
+                  videoUrl: video.src,
+                  currentTime: video.currentTime,
+                  isPlaying: !video.paused
+                }
+              });
+            });
+            }
+
+            // get users from localStorage and validate user
+            async function getUser() {
+              const user = localStorage.getItem("x_user");
+              // local storage not have already user send null
+              if (!user) {
+                return null;
+              }
+              // sendvalidate api
+
+              try {
+                const res = await fetch("/api/validate", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: user,
+                });
+
+                const userData = await res.json();
+
+
+                // cheak localy user id  if returend is valid  parese user
+                if (!userData.id) {
+                  localStorage.removeItem("x_user")
+                  return null;
+                }
+
+                // is not
+                // remove invalid userdate from localStorage
+                // localStorge.removeItem("x_user");
+                return user;
+              } catch (e) {
+                console.log(e);
+                return null;
+              }
+            }
+
+            function getRoom(roomId, passcode = ""){
+              try{
+                // call api
+                const res = fetch(`/api/room/${roomId}`,{
+                  method:"POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    "passcode": passcode,
+                  })
+                })
+
+                return res
+
+
+
+              }catch(e){
+                return null
+
+              }
+            }
+
+            // pascode model
+            const passcodeInp = document.querySelectorAll(".otp-input")
+            const passcodeModel = document.querySelector('.passcode')
+            const passcodeSubBtn = document.querySelector('.gotRoomBtn')
+
+            // handle 4 inputs
+            passcodeInp.forEach((inp,indx) => {
+              inp.addEventListener("input",(e)=>{
+                if(inp.value && indx < passcodeInp.length -1){
+                  passcodeInp[indx +1].focus();
+                }
+              })
+              // handels back and enter
+              inp.addEventListener("keydown",(e)=>{
+                if(e.key ==  "Backspace" && !inp.value && indx > 0){
+                  passcodeInp[indx -1].focus()
+                }
+                if(e.key == "Enter"){
+                  passcodeSubBtn.click()
+                }
+              })
+
+              // handler paste
+              inp.addEventListener("paste",(e)=>{
+                e.preventDefault();
+
+                const pastedData = e.clipboardData.getData("text").slice(0,4)
+                pastedData.split("").forEach((char,i)=>{
+                  if (passcodeInp[i]) passcodeInp[i].value = char
+                })
+                const nextIndex = Math.min(pastedData.length, passcodeInp.length-1);
+                passcodeInp[nextIndex].focus()
+              })
+
+
+            });
+
+            // format input data as one string
+            function getPasscode(){
+              return Array.from(passcodeInp).map((inp)=>inp.value).join("")
+
+            }
+            // passcode model show handler
+            function showPasscodeModel(show=false){
+              passcodeModel.style.display = show ? "flex" : "none"
+            }
+
+            // handle passcode submit
+
+
+            passcodeSubBtn.addEventListener("click", async()=>{
+              const passcode = getPasscode()
+              if (passcode.length !== 4) return
+
+              const res = await getRoom(roomId,passcode)
+              if (res && res.status === 200){
+
+                const room = await res.json()
+                roomLocal(room)
+                roomData = room
+
+                showPasscodeModel(false)
+              }else{
+                showPasscodeModel(true)
+              }
+            })
+
+
+            // user profile management ----------------------
+                  const profilePictureList = [
+              "Alien_drinking.jpg",
+              "Bear_wearing_popcorn_hat.jpg",
+              "Bulldog_boss_holding_cinema_ticket.jpg",
+              "Cat_wearing_headphones_holding.jpg",
+              "Cat_wearing_tiara_and_glasses.jpg",
+              "Dragon_popping_popcorn.jpg",
+              "Lion_wearing_3D_glasse.jpg",
+              "Marshmallow_wearing_VR_goggles_.jpg",
+              "Monkey_eating_bananas_and_popcorn.jpg",
+              "Monkey_prince_holding_golden_banana.jpg",
+              "Ninja_King_holding_popcorn.jpg",
+              "Owl_wizard_holding_wand.jpg",
+              "Panda_eating_popcorn_wearinga.jpg",
+              "Pizza_holding_cinema_ticket.jpg",
+              "Pug_wearing_.jpg",
+              "Purple_ghost_eating_nachos.jpg",
+              "Robot_holding_media_remote.jpg",
+              "Wolf_film_director_holding.jpg",
+            ];
+            let userId
+            let username
+            let email
+            let profilePicture;
+
+            const imageContainer = document.querySelector(`.profileImage`);
+            const imageList = document.querySelector(`.imgList`);
+            const defDP = profilePictureList[2];
+            const changePhoto = document.querySelector(`.changePhoto`);
+            let selectedImage = `/static/profile_pitures/${profilePictureList[1]}`;
+
+
+            // imageSelector
+            const ImageSelctorModel = document.querySelector(`.imageSelector`);
+
+            changePhoto.addEventListener("click", () => {
+              ImageSelctorModel.classList.add("active");
+            });
+
+            const selctBtn = document.querySelector(`.selectBtn`);
+            const clsBtn = document.querySelector(`.clsBtn`);
+
+            selctBtn.addEventListener("click", () => {
+              closeImageModel();
+            });
+            clsBtn.addEventListener("click", () => {
+              closeImageModel();
+            });
+
+
+            // set default image to imagecontainer
+            imageContainer.src = `/static/profile_pitures/${defDP}`;
+
+            // list all images
+            let imgCount = 0;
+
+            profilePictureList.forEach((img) => {
+              const image = ` /static/profile_pitures/${img}`;
+              const item = document.createElement("img");
+
+              item.src = image;
+              item.className = `image_${imgCount}`;
+              // when click on image handler
+              item.addEventListener("click", () => {
+                selectedImage = image;
+                imageContainer.src = image;
+
+                const prevSelected = document.querySelector(".imgList .selected");
+                if (prevSelected) {
+                  prevSelected.classList.remove("selected");
+                }
+                item.classList.add("selected");
+              });
+              imageList.appendChild(item);
+              imgCount++;
+            });
+
+            function closeImageModel() {
+              ImageSelctorModel.classList.remove("active");
+            }
+
+            // user setup handle
+
+            const setupBtn = document.querySelector(`.nxt-Btn`)
+            setupBtn.addEventListener('click', async()=>{
+              const usernameInp = document.querySelector(`#username`)
+              const emailInp = document.querySelector(`#emaill`)
+
+
+              username = usernameInp.value.trim()
+              email = emailInp.value.trim()
+              profilePicture = selectedImage
+
+              // cheack data is emty
+              if (username == " " || email == " "){
+                return //nothing do
+
+              }
+
+              try{
+                const res = await fetch("/api/user",{
+                  method:"POST",
+                  body: JSON.stringify({
+                    username,
+                    email,
+                    profilePicture
+                  })
+
+                })
+
+                if (res.status !== 200){
+                  alert("Inputs are misising")
+                  return
+                }
+
+                const user = await res.json()
+
+                if (user){
+                  // save user in db
+                  localStorage.setItem("x_user", JSON.stringify(user))
+                  // re init room
+                  initData(roomId)
+                  // hide user model
+                  showUserModel(false)
+
+
+                }
+
+              }catch (e){
+                //show errr
+                console.log(e)
+              }
+
+
+            })
+
+            function showUserModel(show=false){
+              const userModel = document.querySelector(`.userAcc`)
+              userModel.style.display = show ? "flex" : "none"
+            }
+
+            // mobile/  screen whe cat input click scrool top of the page
+            const msgInput = document.querySelector('.msgIn');
+            const body = document.body;
+            let initialScrollY = 0;
+
+            msgInput.addEventListener('focus', () => {
+              // current scroll position
+              initialScrollY = window.scrollY;
+
+              // Add class to body to freeze scrolling
+              body.classList.add('keyboard-open');
+              body.style.top = `-${initialScrollY}px`;
+
+              // Scroll to bottom of chat smoothly after a short delay (wait for keyboard)
+              setTimeout(() => {
+                const chatContainer = document.querySelector('.mesageShow');
+                if (chatContainer) {
+                  chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+              }, 300);
+            });
+
+          msgInput.addEventListener('blur', () => {
+            
+            body.classList.remove('keyboard-open');
+            body.style.top = '';
+            
+            // Restore scroll position
+            window.scrollTo(0, initialScrollY);
           });
-
-          const userData = await res.json();
-          
-
-          // cheak localy user id  if returend is valid  parese user
-          if (!userData.id) {
-            localStorage.removeItem("x_user")
-            return null;
-          }
-
-          // is not
-          // remove invalid userdate from localStorage
-          // localStorge.removeItem("x_user");
-          return user;
-        } catch (e) {
-          console.log(e);
-          return null;
-        }
-      }
-
-      function getRoom(roomId, passcode = ""){
-        try{
-          // call api 
-          const res = fetch(`/api/room/${roomId}`,{
-            method:"POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              "passcode": passcode,
-            })
-          })
-
-          return res
-
-
-
-        }catch(e){
-          return null
-
-        }
-      }
-
-      // pascode model 
-      const passcodeInp = document.querySelectorAll(".otp-input")
-      const passcodeModel = document.querySelector('.passcode')
-      const passcodeSubBtn = document.querySelector('.gotRoomBtn')
-
-      // handle 4 inputs 
-      passcodeInp.forEach((inp,indx) => {
-        inp.addEventListener("input",(e)=>{
-          if(inp.value && indx < passcodeInp.length -1){
-            passcodeInp[indx +1].focus();
-          }
-        })
-        // handels back and enter 
-        inp.addEventListener("keydown",(e)=>{
-          if(e.key ==  "Backspace" && !inp.value && indx > 0){
-            passcodeInp[indx -1].focus()
-          }
-          if(e.key == "Enter"){
-            passcodeSubBtn.click()
-          }
-        })
-
-        // handler paste
-        inp.addEventListener("paste",(e)=>{
-          e.preventDefault();
-
-          const pastedData = e.clipboardData.getData("text").slice(0,4)
-          pastedData.split("").forEach((char,i)=>{
-            if (passcodeInp[i]) passcodeInp[i].value = char
-          })
-          const nextIndex = Math.min(pastedData.length, passcodeInp.length-1);
-          passcodeInp[nextIndex].focus()
-        }) 
-
-        
-      });
-
-      // format input data as one string 
-      function getPasscode(){
-        return Array.from(passcodeInp).map((inp)=>inp.value).join("")
-
-      }
-      // passcode model show handler
-      function showPasscodeModel(show=false){
-        passcodeModel.style.display = show ? "flex" : "none"
-      }
-
-      // handle passcode submit 
-
-
-      passcodeSubBtn.addEventListener("click", async()=>{
-        const passcode = getPasscode()
-        if (passcode.length !== 4) return
-
-        const res = await getRoom(roomId,passcode)
-        if (res && res.status === 200){
-          
-          const room = await res.json()
-          roomLocal(room)
-          roomData = room 
-
-          showPasscodeModel(false)
-        }else{
-          showPasscodeModel(true)
-        }
-      })
-
-
-      // user profile management ----------------------
-            const profilePictureList = [
-        "Alien_drinking.jpg",
-        "Bear_wearing_popcorn_hat.jpg",
-        "Bulldog_boss_holding_cinema_ticket.jpg",
-        "Cat_wearing_headphones_holding.jpg",
-        "Cat_wearing_tiara_and_glasses.jpg",
-        "Dragon_popping_popcorn.jpg",
-        "Lion_wearing_3D_glasse.jpg",
-        "Marshmallow_wearing_VR_goggles_.jpg",
-        "Monkey_eating_bananas_and_popcorn.jpg",
-        "Monkey_prince_holding_golden_banana.jpg",
-        "Ninja_King_holding_popcorn.jpg",
-        "Owl_wizard_holding_wand.jpg",
-        "Panda_eating_popcorn_wearinga.jpg",
-        "Pizza_holding_cinema_ticket.jpg",
-        "Pug_wearing_.jpg",
-        "Purple_ghost_eating_nachos.jpg",
-        "Robot_holding_media_remote.jpg",
-        "Wolf_film_director_holding.jpg",
-      ];
-      let userId 
-      let username 
-      let email  
-      let profilePicture;
-
-      const imageContainer = document.querySelector(`.profileImage`);
-      const imageList = document.querySelector(`.imgList`);
-      const defDP = profilePictureList[2];
-      const changePhoto = document.querySelector(`.changePhoto`);
-      let selectedImage = `/static/profile_pitures/${profilePictureList[1]}`;
-
-
-      // imageSelector
-      const ImageSelctorModel = document.querySelector(`.imageSelector`);
-      
-      changePhoto.addEventListener("click", () => {
-        ImageSelctorModel.classList.add("active");
-      });
-
-      const selctBtn = document.querySelector(`.selectBtn`);
-      const clsBtn = document.querySelector(`.clsBtn`);
-
-      selctBtn.addEventListener("click", () => {
-        closeImageModel();
-      });
-      clsBtn.addEventListener("click", () => {
-        closeImageModel();
-      });
-
-
-      // set default image to imagecontainer
-      imageContainer.src = `/static/profile_pitures/${defDP}`;
-
-      // list all images
-      let imgCount = 0;
-
-      profilePictureList.forEach((img) => {
-        const image = ` /static/profile_pitures/${img}`;
-        const item = document.createElement("img");
-
-        item.src = image;
-        item.className = `image_${imgCount}`;
-        // when click on image handler
-        item.addEventListener("click", () => {
-          selectedImage = image;
-          imageContainer.src = image;
-
-          const prevSelected = document.querySelector(".imgList .selected");
-          if (prevSelected) {
-            prevSelected.classList.remove("selected");
-          }
-          item.classList.add("selected");
-        });
-        imageList.appendChild(item);
-        imgCount++;
-      });
-
-      function closeImageModel() {
-        ImageSelctorModel.classList.remove("active");
-      }
-
-      // user setup handle  
-
-      const setupBtn = document.querySelector(`.nxt-Btn`) 
-      setupBtn.addEventListener('click', async()=>{
-        const usernameInp = document.querySelector(`#username`)
-        const emailInp = document.querySelector(`#emaill`)
-
-
-        username = usernameInp.value.trim()
-        email = emailInp.value.trim()
-        profilePicture = selectedImage
-
-        // cheack data is emty 
-        if (username == " " || email == " "){
-          return //nothing do 
-
-        }
-
-        try{
-          const res = await fetch("/api/user",{
-            method:"POST",
-            body: JSON.stringify({
-              username,
-              email,
-              profilePicture
-            })
-
-          })
-
-          if (res.status !== 200){
-            alert("Inputs are misising")
-            return
-          }
-
-          const user = await res.json()
-
-          if (user){
-            // save user in db 
-            localStorage.setItem("x_user", JSON.stringify(user))
-            // re init room 
-            initData(roomId)
-            // hide user model 
-            showUserModel(false)
-
-
-          }
-
-        }catch (e){
-          //show errr
-          console.log(e)
-        }
-
-
-      })
-
-      function showUserModel(show=false){
-        const userModel = document.querySelector(`.userAcc`)
-        userModel.style.display = show ? "flex" : "none"
-      }
-
-
-
-
-
     </script>
-</body>
+  </body>
 </html>

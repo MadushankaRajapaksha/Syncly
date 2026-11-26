@@ -1,6 +1,12 @@
 * {
   padding: 0px;
   margin: 0px;
+  box-sizing: border-box;
+}
+
+html,body{
+  max-width: 100%;
+  overflow-x: hidden;
 }
 body {
   background-color: #3a3f9d;
@@ -8,6 +14,12 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 0px 128px;
   overflow-x: hidden;
+}
+
+img,video,iframe{
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 a {
@@ -412,8 +424,10 @@ div .creatingRoom .lable {
 /* room  */
 .roomContent {
   width: 100%;
-  height: 80vh;
-  margin-top: 24px;
+  max-width: 100%;
+  height:auto;
+  min-height: 80vh;
+  margin-top: 24px auto;
   background-color: white;
   padding: 16px;
 
@@ -421,12 +435,28 @@ div .creatingRoom .lable {
   flex-direction: column;
   color: black;
   gap: 12px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.roomMainGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* 50% 50% */
+  gap: 12px;
+  width: 100%;
+  align-items: stretch;  /* height sama karanna */
 }
 .chatCoantianer {
+  width: 100%;
+  max-width: 100%;
   background-color: antiquewhite;
   overflow-y: auto;
   border: 2px solid rgb(86, 76, 76);
-  width: 100%;
+  display: flex;
+  flex-direction: column; 
+  box-sizing: border-box;
+  overflow: hidden;
+  
 }
 .chatCoantianer .header {
   padding: 12px;
@@ -434,16 +464,20 @@ div .creatingRoom .lable {
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  width: auto;
+  width: 100%;
   border-bottom: 2px solid rgb(86, 76, 76);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 .chatCoantianer .header .onlineCount {
-  padding: 4px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
   border: 2px solid rgb(86, 76, 76);
 }
 .chatCoantianer .header h1 {
   font-weight: 500;
   font-size: 1.2rem;
+  margin: 0;
 }
 
 .msgInp {
@@ -451,49 +485,86 @@ div .creatingRoom .lable {
   flex-direction: row;
   padding: 12px;
   border-top: 2px solid rgb(86, 76, 76);
-  gap: 4px;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
+ 
 .mesageShow {
+  width: 100%;
   min-height: 0;
-  height: 460px;
+  height: 460px; 
   overflow-y: auto;
+  padding: 8px;
+  box-sizing: border-box;
 }
 .msgInp input {
+  flex: 1;
+  min-width: 0;
   font-size: 1rem;
   padding: 12px;
-  width: 100%;
+  box-sizing: border-box;
   border: 2px solid rgb(86, 76, 76);
 }
 .msgInp button {
+  flex-shrink: 0;
   color: white;
   font-size: 1.1rem;
-  padding: 6px;
+  padding: 12px 16px;
   background-color: #2563eb;
   border: 2px solid rgb(86, 76, 76);
+  cursor: pointer;
+  white-space: nowrap;
 }
 .videoContainer {
+  width: 100%;
+  max-width: 100%;
   display: flex;
-  flex-direction: row;
-  gap: 12px;
+  flex-direction: column;
+  /* gap: 12px; */
+   
 }
 
 .videoContainer .video {
+  flex: 1;
+  min-width: 0;              
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   background-color: antiquewhite;
   border: 2px solid rgb(86, 76, 76);
   padding: 12px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .videoPlayer {
-  min-width: 960px;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  display: block;
+  object-fit: contain;
+   
+}
+.videoPlayer video {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .onlineUsersContainer {
   width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: 200px;
   background-color: antiquewhite;
   border: 2px solid rgb(86, 76, 76);
-  min-height: 0;
-  height: 160px;
+  box-sizing: border-box;
   overflow-y: auto;
   
 }
@@ -510,10 +581,14 @@ div .creatingRoom .lable {
 .onlineUsersContainer .header h1 {
   font-weight: 500;
   font-size: 1.2rem;
+  margin: 0;
 }
 
 .onlineUsersContainer img{
-  width: 4rem;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: cover;
 }
 .onlineUsersList{
   display: flex;
@@ -522,20 +597,21 @@ div .creatingRoom .lable {
   flex-wrap: wrap;
   padding: 12px;
 
-  
-  
-  
-  
 
 }
 
 .onlineUsersContainer  .user {
   display: flex;
+  flex: 1 1 140px;
   flex-direction: row;
   gap: 12px;
   padding: 12px;
   background-color: white;
   box-sizing: border-box;
+  max-width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+
 
 }
 
@@ -559,26 +635,40 @@ div .creatingRoom .lable {
   display: flex;
   flex-direction: row;
   background-color: whitesmoke;
-  padding: 6px;
-  margin: 6px;
+  padding: 8px;
+  margin: 4px 0;
   gap: 8px;
-  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
 }
 
 .msgBox .sec {
   display: flex;
   flex-direction: column;
+
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .msgBox .userImg {
   width: 48px;
   height: 48px;
-  /* border-radius: 50%; */
+  flex-shrink: 0;
+  object-fit: cover;
 }
 
 .msgBox .username {
   font-size: 1.2em;
   font-weight: 600;
+ 
+}
+.msgBox .message-text {
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
 .passcode {
@@ -644,6 +734,10 @@ div .creatingRoom .lable {
   display: flex;
   flex-direction: row;
   gap: 12px;
+
+  padding: 24px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .passcodeInpContainer input{
@@ -716,8 +810,7 @@ div .creatingRoom .lable {
 
 /* lager descktop screen s 
 */
-
-@media screen  and (min-width:1200px){
+@media screen and (min-width:1200px){
   body{
     padding: 0px 128px;
   }
@@ -725,10 +818,72 @@ div .creatingRoom .lable {
   .hero{
     padding: 8em 240px;
   }
-  
-  
-}
 
+  .roomContent{
+    max-width: 1400px;
+    margin: 24px auto;
+  }
+  
+  .roomMainGrid { 
+    display: flex !important;
+    flex-direction: row !important;
+    height: 600px;
+    gap: 12px;
+    width: 100%;
+  }
+  
+  .videoContainer {
+    flex: 1.5 !important; 
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .videoContainer .video {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .videoPlayer{
+    width: 100% !important;
+    height: 100% !important; 
+    max-width: 100% !important;
+    object-fit: contain;
+    background-color: #000;
+  }
+  
+  .videoPlayer video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .chatCoantianer {
+    flex: 1 !important;
+    height: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+  
+  .mesageShow {
+    flex: 1;
+    height: auto !important; 
+    min-height: 0;
+    overflow-y: auto;
+  }
+  
+  /* Online users - full width below grid */
+  .onlineUsersContainer {
+    width: 100% !important;
+    margin-top: 12px;
+  }
+}
 /* descktop screens  */
 
 @media screen  and (max-width:1199px){
@@ -744,8 +899,17 @@ div .creatingRoom .lable {
     font-size: 4em;
   }
 
-  .videoPlayer{
+  /* .videoPlayer{
     min-width: 720px;
+  } */
+
+  .roomContent{
+    margin: 16px auto;
+
+  }
+   .roomMainGrid { grid-template-columns: 1fr 1fr; }
+  .mesageShow{
+    height: 400px;
   }
   
   
@@ -812,8 +976,63 @@ div .creatingRoom .lable {
   
   
   /* room  */
+  .roomContent{
+    /* width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 80vh;
+    box-sizing: border-box; */
+    margin: 8px auto;
+    padding: 8px;
+    gap: 8px;
+  }
+  .roomMainGrid {
+    grid-template-columns: 1fr;  /* single column */
+  }
+  .videoContainer .video {
+    min-height: 300px;
+  }
+  /* .videoContainer {
+    flex-direction: column;
+  } */
   .videoPlayer{
-    min-width: 720px;
+    aspect-ratio: 16 / 9;
+  }
+  .mesageShow {
+    height: 35vh;
+    min-height: 250px;
+  }
+  .msgBox {
+    padding: 6px;
+    margin: 3px 0;
+  }
+  msgBox .userImg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .msgBox .username {
+    font-size: 0.9rem;
+  }
+  .msgBox .message-text {
+    font-size: 0.85rem;
+  }
+  .msgInp input{
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+  .msgInp button {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .onlineUsersContainer .user{
+    flex:1 1 100%;
+  }
+
+  .onlineUsersContainer img {
+    width: 36px;
+    height: 36px;
   }
   
   
@@ -893,8 +1112,46 @@ div .creatingRoom .lable {
 
   
   /* room  */
+  .roomContent{
+    /* height: auto;
+    min-height: 80vh; */
+    padding: 8px;
+    gap: 8px;
+  }
+  .roomMainGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
   .videoPlayer{
-    min-width: 720px;
+    min-width:100%;
+  }
+  .videoContainer .video {
+    min-height: 300px;
+  }
+  .mesageShow {
+    height: 35vh;
+    min-height: 250px;
+  }
+  .msgInp{
+    flex-direction: column;
+  }
+  .msgInp input{
+    width: 100%;
+
+  }
+  .msgInp button{
+    width: 100%;
+
+  }
+  .passcodeContainer{
+    padding: 24px;
+  }
+
+  .passcodeInpContainer input {
+    width: 2em;
+    height: 2em;
+    font-size: 1.2rem;
   }
   
   
@@ -912,6 +1169,7 @@ div .creatingRoom .lable {
   }
   nav{
     font-size: 0.9rem;
+    display: none;
   
  
   }
@@ -989,13 +1247,233 @@ div .creatingRoom .lable {
   }
   
   /* room  */
-  .videoPlayer{
-    min-width: 720px;
+  .roomContent{
+    padding: 8px;
+    gap: 8px;
   }
+  .chatCoantianer {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 50vh;  
+    max-height: 500px;
+    border: 2px solid rgb(86, 76, 76);
+    background-color: antiquewhite;
+    overflow: hidden;  
+    position: relative; 
+    z-index: 10;
+  }
+  .chatCoantianer .header {
+    flex-shrink: 0;
+    padding: 8px;
+  }
+  .chatCoantianer .header h1 {
+    font-size: 1rem;
+  }
+  .mesageShow{
+    flex: 1;
+    /* height: auto !important; */
+    min-height: 200px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 8px;
+    /* height: 250px; */
+    -webkit-overflow-scrolling: touch; 
+  }
+  .msgInp{
+   flex-shrink: 0;   
+    padding: 8px;
+    border-top: 2px solid rgb(86, 76, 76);
+    background-color: antiquewhite;
+    display: flex;
+    gap: 8px;
+    width: 100%;
+
+    position: relative; 
+    z-index: 20;
+
+  }
+  body .keyboard-open {
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+  }
+  .msgInp input{
+    flex: 1;
+    font-size: 0.9rem;
+    padding: 8px;
+    min-width: 0;
+
+  }
+  .msgInp button{
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    padding: 8px;
+    white-space: nowrap;
+
+  }
+  .videoContainer{
+    padding: 0pxs;
+  }
+  .videoContainer .video {
+    padding: 8px;
+  }
+
+   .onlineUsersContainer {
+    height: 120px;
+  }
+  
+  .onlineUsersContainer .header {
+    padding: 8px;
+  }
+  
+  .onlineUsersContainer .header h1 {
+    font-size: 1rem;
+  }
+  
+  .onlineUsersContainer img {
+    width: 2.5rem;
+  }
+
+  .onlineUsersList{
+    padding: 8px;
+
+  }
+
+  .onlineUsersContainer .user{
+    padding: 8px;
+    gap:8px;
+  }
+
+  .onlineUsersContainer .onlineUsersList .user .usernameL {
+    font-size: 1em;
+  }
+
+  .msgBox .userImg{
+    width: 36px;
+    height: 36px;
+  }
+  .msgBox .username{
+    font-size: 1em;
+  }
+
+  .passcodeContainer{
+    gap: 8px;
+  }
+    .passcodeInpContainer input {
+    width: 1.8em;
+    height: 1.8em;
+    font-size: 1rem;
+  }
+  
+  .gotRoomBtn {
+    font-size: 1rem;
+    padding: 8px;
+    margin: 8px;
+  }
+
+  .loading h1{
+    font-size: 1.2rem;
+  }
+
+  .loading .loader{
+    width: 48px;
+    height: 48px;
+
+  }
+  .loading .loder::before,
+  .loading .loder::after {
+    border-width: 4px;
+  }
+  
+
+
   
   
 }
 
+
+/* layout room screen  */
+@media screen and (min-width: 1024px) {
+ 
+  .roomMainGrid {
+    display: flex !important;
+    flex-direction: row !important;
+    height: 600px;
+    gap: 12px;
+    width: 100%;
+  }
+
+   
+  .videoContainer {
+    flex: 1.5 !important;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .videoContainer .video {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .videoPlayer {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain;
+    background-color: #000;
+  }
+
+  .videoPlayer video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+ 
+  .chatCoantianer {
+    flex: 1 !important;
+    height: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .mesageShow {
+    flex: 1;
+    height: auto !important;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  
+  .onlineUsersContainer {
+    width: 100% !important;
+    margin-top: 12px;
+  }
+}
+
+/* Mobile/Tablet - column layout */
+@media screen and (max-width: 1023px) {
+  .roomMainGrid {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto;
+  }
+  
+  .videoContainer, .chatCoantianer {
+    flex: 1 !important;
+    width: 100%;
+  }
+
+  .mesageShow {
+    height: 400px;
+  }
+}
 
 
 
