@@ -132,6 +132,7 @@
 
 
               async function initData(roomId){
+                if (roomData) return 
                 //get userdata from local storage and validate user
                 const localUser = await getUser()
                 if (!localUser){
@@ -660,6 +661,9 @@
                 roomLocal(room)
                 roomData = room
 
+                // initData()
+                window.location.reload() 
+
                 showPasscodeModel(false)
               }else{
                 showPasscodeModel(true)
@@ -810,7 +814,7 @@
             }
 
             // mobile/  screen whe cat input click scrool top of the page
-            const msgInput = document.querySelector('.msgIn');
+            const msgInput = document.querySelector('.msgIn input');
             const body = document.body;
             let initialScrollY = 0;
 
