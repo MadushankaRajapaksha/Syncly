@@ -1,4 +1,4 @@
-const playerWraper = document.getElementsByClassName("videoPlayerWraper");
+const playerWraper = document.querySelector(".videoPlayer");
 
 const vid = document.querySelector(`.syncVideo`);
 // const videoSoruce = document.querySelector(".syncVideo source");
@@ -84,17 +84,26 @@ subtitlesToggle.addEventListener("click",()=>{
 
     if (!isSubtitlesEnabled) {
       subText.textContent = "";
+      subOverlay.style.display = "none"
+    }else{
+        subOverlay.style.display = "flex";
+
     }
+
 })
 
 // handler full screen 
-fullscreenBtn.addEventListener("click",()=>{
-    subToggleBtn.textContent = subtitlesEnabled ? "CC: ON" : "CC: OFF";
-    subToggleBtn.classList.toggle("active", subtitlesEnabled);
+fullscreenBtn.addEventListener("click", () => {
+  if (!playerWraper) {
+    console.error("playerWraper element not found in HTML!");
+    return;
+  }
 
-    if (!subtitlesEnabled) {
-      subtitleText.textContent = "";
-    }
-
-})
-
+  if (!document.fullscreenElement) {
+    playerWraper.requestFullscreen().catch((err) => {
+      console.error("Fullscreen failed:", err);
+    });
+  } else {
+    document.exitFullscreen();
+  }
+});
