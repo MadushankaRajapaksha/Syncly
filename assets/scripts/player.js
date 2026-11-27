@@ -84,10 +84,6 @@ subtitlesToggle.addEventListener("click",()=>{
 
     if (!isSubtitlesEnabled) {
       subText.textContent = "";
-      subOverlay.style.display = "none"
-    }else{
-        subOverlay.style.display = "flex";
-
     }
 
 })

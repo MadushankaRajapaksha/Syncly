@@ -9,11 +9,19 @@ html,body{
   overflow-x: hidden;
 }
 body {
-  background-color: #3a3f9d;
+  
   color: white;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0px 128px;
+  padding: 0;
   overflow-x: hidden;
+}
+
+section{
+  padding: 0px 128px;
+}
+
+.heroSec{
+  background-color: #3a3f9d;
 }
 
 img,video,iframe{
@@ -102,6 +110,10 @@ nav h1 {
   color: white;
   padding: 12px 24px;
   font-weight: 600;
+}
+
+.features{
+  background-color: white;
 }
 
 .form {
@@ -919,7 +931,7 @@ video::cue{
 /* lager descktop screen s 
 */
 @media screen and (min-width:1200px){
-  body{
+  section{
     padding: 0px 128px;
   }
 
@@ -995,7 +1007,7 @@ video::cue{
 /* descktop screens  */
 
 @media screen  and (max-width:1199px){
-  body{
+  section{
     padding: 0px 64px;
   }
 
@@ -1025,7 +1037,7 @@ video::cue{
 
 /* tablets  */
 @media screen  and (max-width:991px){
-  body{
+  section{
     padding: 0px 32px;
   }
   nav{
@@ -1150,7 +1162,7 @@ video::cue{
 
 /* tablets portrait  */
 @media screen  and (max-width:767px){
-  body{
+  section{
     padding: 0px 64px;
   }
   nav{
@@ -1272,14 +1284,17 @@ video::cue{
 
 /* mobile screens  */
 @media screen  and (max-width:767px){
-  body{
+  section{
     padding: 0px 8px;
   }
   nav{
     font-size: 0.9rem;
-    display: none;
+     
   
  
+  }
+  .m-hide{
+    display: none;
   }
 
   nav h1{
