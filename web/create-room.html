@@ -7,175 +7,176 @@
     <link rel="stylesheet" href="/static/css/style.css?v=420" />
   </head>
   <body>
-    <nav>
-      <h1 class="logo">Syncly</h1>
-      <ul class="items">
-        <li>Home</li>
-        <li>Features</li>
-        <li>How this work</li>
-      </ul>
-      <a href="/room" class="nav-cta"> Create Room</a>
-    </nav>
-    <div class="form">
-      <!-- image selector  -->
-      <div class="imageSelector">
-        <div class="box">
-          <h1>Select Image</h1>
-          <div class="imgList"></div>
-          <div class="selctBtn">
-            <button class="clsBtn">Close</button>
-            <button class="selectBtn">Select</button>
+    <section style="background-color: #3a3f9d; height: 100vh; overflow: hidden;">
+      <nav>
+        <h1 class="logo">Syncly</h1>
+        <ul class="items">
+          <li>Home</li>
+          <li>Features</li>
+          <li>How this work</li>
+        </ul>
+        <a href="/room" class="nav-cta"> Create Room</a>
+      </nav>
+      <div class="form">
+        <!-- image selector  -->
+        <div class="imageSelector">
+          <div class="box">
+            <h1>Select Image</h1>
+            <div class="imgList"></div>
+            <div class="selctBtn">
+              <button class="clsBtn">Close</button>
+              <button class="selectBtn">Select</button>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- user profile create  -->
-      <fieldset class="profileData">
-        <h1>Create you profile first</h1>
-        <img
-          src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
-          alt=""
-          class="profileImage"
-        />
-        <p class="changePhoto">Change Photo</p>
+        <!-- user profile create  -->
+        <fieldset class="profileData">
+          <h1>Create you profile first</h1>
+          <img
+            src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
+            alt=""
+            class="profileImage"
+          />
+          <p class="changePhoto">Change Photo</p>
 
-        <!-- username -->
+          <!-- username -->
 
-        <div class="usernameIn">
-          <label for="username">User Name* : </label>
-          <input
-            type="name"
-            name="username"
-            id="username"
-            placeholder="A name thats you friends call you!"
-            require
-          />
-        </div>
-        <!-- email  -->
-        <div class="emailIn">
-          <label for="email">Emaill Adress* : </label>
-          <input
-            type="email"
-            name="email"
-            id="emaill"
-            placeholder="A address get you maill in internet!"
-            required
-          />
-        </div>
-        <!-- show error masg wehn have erro -->
-        <div class="erroMsgPro" style="display: none">
-          <p></p>
-        </div>
-        <button class="nxt-Btn">Next</button>
-
-        <!-- nextbutton -->
-      </fieldset>
-      <!-- room create  -->
-      <fieldset class="roomData" style="display: none">
-        <h1>Let's config our room!</h1>
-        <!-- room name  -->
-        <div class="rooNameIn">
-          <label for="roomName">Room Name* : </label>
-          <input
-            type="name"
-            name="roomName"
-            id="roomName"
-            placeholder="Name room with cool name!"
-            require
-          />
-        </div>
-        <!-- streaming url  -->
-        <div class="streamUrlIn">
-          <label for="streamUrl">Stream Url* : </label>
-          <input
-            type="url"
-            name="streamUrl"
-            id="streamUrl"
-            placeholder="Add your video path with url..."
-            require
-          />
-        </div>
-        <!-- subtitle url  -->
-        <div class="subtitleUrlIn">
-          <label for="subtitleUrl">Sutitle Url : </label>
-          <input
-            type="url"
-            name="subtitleUrl"
-            id="subtitleUrl"
-            placeholder="Add your subtitles path with url..."
-          />
-        </div>
-        <!-- public togle  -->
-        <div class="isRoomPrivetIn">
-          <label for="toggle">Make Room Privet : </label>
-          <div>
+          <div class="usernameIn">
+            <label for="username">User Name* : </label>
             <input
-              type="checkbox"
-              name="isRoomPrivet"
-              id="toggle"
-              class="toggle"
+              type="name"
+              name="username"
+              id="username"
+              placeholder="A name thats you friends call you!"
+              require
             />
-            <label
-              for="toggle"
-              class="toggle-l"
-              role="switch"
-              aria-checked="false"
-            >
-              <span class="toggle-tumb"></span>
-            </label>
           </div>
+          <!-- email  -->
+          <div class="emailIn">
+            <label for="email">Emaill Adress* : </label>
+            <input
+              type="email"
+              name="email"
+              id="emaill"
+              placeholder="A address get you maill in internet!"
+              required
+            />
+          </div>
+          <!-- show error masg wehn have erro -->
+          <div class="erroMsgPro" style="display: none">
+            <p></p>
+          </div>
+          <button class="nxt-Btn">Next</button>
+
+          <!-- nextbutton -->
+        </fieldset>
+        <!-- room create  -->
+        <fieldset class="roomData" style="display: none">
+          <h1>Let's config our room!</h1>
+          <!-- room name  -->
+          <div class="rooNameIn">
+            <label for="roomName">Room Name* : </label>
+            <input
+              type="name"
+              name="roomName"
+              id="roomName"
+              placeholder="Name room with cool name!"
+              require
+            />
+          </div>
+          <!-- streaming url  -->
+          <div class="streamUrlIn">
+            <label for="streamUrl">Stream Url* : </label>
+            <input
+              type="url"
+              name="streamUrl"
+              id="streamUrl"
+              placeholder="Add your video path with url..."
+              require
+            />
+          </div>
+          <!-- subtitle url  -->
+          <div class="subtitleUrlIn">
+            <label for="subtitleUrl">Sutitle Url : </label>
+            <input
+              type="url"
+              name="subtitleUrl"
+              id="subtitleUrl"
+              placeholder="Add your subtitles path with url..."
+            />
+          </div>
+          <!-- public togle  -->
+          <div class="isRoomPrivetIn">
+            <label for="toggle">Make Room Privet : </label>
+            <div>
+              <input
+                type="checkbox"
+                name="isRoomPrivet"
+                id="toggle"
+                class="toggle"
+              />
+              <label
+                for="toggle"
+                class="toggle-l"
+                role="switch"
+                aria-checked="false"
+              >
+                <span class="toggle-tumb"></span>
+              </label>
+            </div>
+          </div>
+          <!-- if privet invite code - coustem one (passcode) -->
+          <div class="passcodeIn" style="display: none">
+            <label for="passcode">Secret Code for Enter Room * : </label>
+            <input
+              type="text"
+              name="passcode"
+              min="4"
+              max="4"
+              placeholder="4-digit"
+              id="passcode"
+            />
+          </div>
+          <!-- show error masg wehn have erro -->
+          <div class="erroMsgRoom" style="display: none">
+            <p></p>
+          </div>
+          <!-- next button  -->
+          <button class="createRoomBtn">Create Room</button>
+        </fieldset>
+        <!-- loading screen  -->
+        <div class="creatingRoom" style="display: none">
+          <h1>Room is prepiaring...</h1>
+          <!-- loading animation -->
+          <div class="loder"></div>
+          <span class="lable">give me second</span>
         </div>
-        <!-- if privet invite code - coustem one (passcode) -->
-        <div class="passcodeIn" style="display: none">
-          <label for="passcode">Secret Code for Enter Room * : </label>
-          <input
-            type="text"
-            name="passcode"
-            min="4"
-            max="4"
-            placeholder="4-digit"
-            id="passcode"
-          />
+
+        <!-- room created succes  -->
+        <div class="roomCreated" style="display: none">
+          <h1>Grate Job, room created!</h1>
+
+          <!-- succes icon with svg  -->
+          <svg
+            width="128px"
+            height="128px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.78 9.7L11.11 15.37C10.97 15.51 10.78 15.59 10.58 15.59C10.38 15.59 10.19 15.51 10.05 15.37L7.22 12.54C6.93 12.25 6.93 11.77 7.22 11.48C7.51 11.19 7.99 11.19 8.28 11.48L10.58 13.78L15.72 8.64C16.01 8.35 16.49 8.35 16.78 8.64C17.07 8.93 17.07 9.4 16.78 9.7Z"
+              fill="#3a3f9d"
+            />
+          </svg>
+
+          <button class="openRoomBtn">Open Room</button>
         </div>
-        <!-- show error masg wehn have erro -->
-        <div class="erroMsgRoom" style="display: none">
-          <p></p>
-        </div>
-        <!-- next button  -->
-        <button class="createRoomBtn">Create Room</button>
-      </fieldset>
-      <!-- loading screen  -->
-      <div class="creatingRoom" style="display: none">
-        <h1>Room is prepiaring...</h1>
-        <!-- loading animation -->
-        <div class="loder"></div>
-        <span class="lable">give me second</span>
+
+        <div></div>
       </div>
-
-      <!-- room created succes  -->
-      <div class="roomCreated" style="display: none">
-        <h1>Grate Job, room created!</h1>
-
-        <!-- succes icon with svg  -->
-        <svg
-          width="128px"
-          height="128px"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.78 9.7L11.11 15.37C10.97 15.51 10.78 15.59 10.58 15.59C10.38 15.59 10.19 15.51 10.05 15.37L7.22 12.54C6.93 12.25 6.93 11.77 7.22 11.48C7.51 11.19 7.99 11.19 8.28 11.48L10.58 13.78L15.72 8.64C16.01 8.35 16.49 8.35 16.78 8.64C17.07 8.93 17.07 9.4 16.78 9.7Z"
-            fill="#3a3f9d"
-          />
-        </svg>
-
-        <button class="openRoomBtn">Open Room</button>
-      </div>
-
-      <div></div>
-    </div>
+    </section>
     <script>
-      
       // select elmet in DOM
       const nextInProfile = document.querySelector(`.nxt-Btn`);
       const profileDataField = document.querySelector(`.profileData`);
@@ -220,7 +221,7 @@
         "Robot_holding_media_remote.jpg",
         "Wolf_film_director_holding.jpg",
       ];
-      let userId = 0
+      let userId = 0;
       let username = "";
       let email = "";
       let profilePicture;
@@ -230,7 +231,6 @@
       let subtitleUrl = "";
       let isRoomPrivet = false;
       let passcode = null;
-      
 
       const imageContainer = document.querySelector(`.profileImage`);
       const imageList = document.querySelector(`.imgList`);
@@ -241,26 +241,26 @@
       async function initUser() {
         // cheack alread user data is in local storage
         const localUser = await getUser();
-        const user = JSON.parse(localUser)
-       
+        const user = JSON.parse(localUser);
+
         // is have user set data to  user data form in create ro inputs and desable edit it
         if (user) {
-          userId = user.userId
+          userId = user.userId;
           // username filed fill with user name and desable edit
-          usernameInp.value = user.username ;
+          usernameInp.value = user.username;
           usernameInp.disabled = true;
 
           //email data
           emaillInp.value = user.email;
           emaillInp.disabled = true;
 
-          // set profile image 
-          selectedImage = user.profilePicture
-          imageContainer.src = selectedImage
+          // set profile image
+          selectedImage = user.profilePicture;
+          imageContainer.src = selectedImage;
 
           // hide profile piture changer
-          changePhoto.style.display = none
-          changePhoto.style.opacity = 0
+          changePhoto.style.display = none;
+          changePhoto.style.opacity = 0;
         }
       }
 
@@ -268,7 +268,7 @@
 
       // imageSelector
       const ImageSelctorModel = document.querySelector(`.imageSelector`);
-      
+
       changePhoto.addEventListener("click", () => {
         ImageSelctorModel.classList.add("active");
       });
@@ -282,10 +282,6 @@
       clsBtn.addEventListener("click", () => {
         closeImageModel();
       });
-
-      
-
-      
 
       // set default image to imagecontainer
       imageContainer.src = `/static/profile_pitures/${defDP}`;
@@ -420,7 +416,7 @@
           },
         };
 
-        console.log(room)
+        console.log(room);
         let res;
         //  sends to api
         try {
@@ -491,7 +487,7 @@
 
           // cheak localy user id  if returend is valid  parese user
           if (!userData.id) {
-            localStorage.removeItem("x_user")
+            localStorage.removeItem("x_user");
             return null;
           }
 

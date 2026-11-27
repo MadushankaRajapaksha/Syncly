@@ -55,8 +55,10 @@ nav ul {
   flex-direction: row;
   gap: 1rem;
 }
+ 
+ 
 
-nav a {
+nav  .nav-cta {
   background-color: white;
   color: #3a3f9d;
   padding: 6px 12px;
@@ -114,6 +116,131 @@ nav h1 {
 
 .features{
   background-color: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 64px  ;
+  gap: 18px;
+}
+.heroSec{
+  height: 100vh;
+}
+
+.howItsWork{
+  background-color: #3a3f9d;
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 64px  ;
+  gap: 18px;
+
+}
+
+.howItsWork .box{
+  background-color: whitesmoke;
+}
+.ctaSec{
+ 
+   color: #000;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 64px  ;
+  gap: 18px;
+
+}
+.ctaSec button{
+  padding: 16px 32px;
+  background-color: #2563eb;
+  color: whitesmoke;
+  font-size: 1.2em;
+  border: none;
+}
+.features h1,.howItsWork h1,.ctaSec h1{
+  font-size: 3em;
+}
+section .heading{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+section .heading h1{
+  font-size: 3em;
+}
+section .heading h2{
+  font-size: 1.2em;
+  font-weight: 450;
+}
+footer{
+  padding: 12px 128px;
+  color:  black;
+  border-top: 2px solid rgb(86, 76, 76);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+   
+}
+.fetursList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 32px;
+
+  justify-content: center;
+  width: 100%;
+
+}
+
+
+section .box{
+  max-width: 320px;
+  /* height: 230px; */
+  /* max-height: 360px; */
+  background: wheat;
+  color: black;
+  padding: 12px;
+  border: 2px solid rgb(86, 76, 76);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: start;
+  box-sizing: border-box;
+
+}
+
+
+
+.box .ico{
+  font-size: 3.8em;
+}
+
+ 
+ 
+.numIco  {
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 500;
+  background-color: #2563eb;
+  color: whitesmoke;
+  padding: 12px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  aspect-ratio: 1 / 1 ;
+}
+.box h2{
+  font-size: 1.4em;
+}
+
+.box p {
+  font-size: 1em;
+  font-weight: 400;
+  color: rgb(86, 76, 76)s;
 }
 
 .form {
@@ -1040,6 +1167,9 @@ video::cue{
   section{
     padding: 0px 32px;
   }
+  .heroSec{
+    height: auto;
+  }
   nav{
     font-size: 1rem;
     padding: 16px 0px;
@@ -1165,6 +1295,10 @@ video::cue{
   section{
     padding: 0px 64px;
   }
+  .fetursList{
+    padding: 0px !important;
+
+  }
   nav{
      
   
@@ -1285,7 +1419,14 @@ video::cue{
 /* mobile screens  */
 @media screen  and (max-width:767px){
   section{
-    padding: 0px 8px;
+    padding: 32px 16px !important;
+  }
+  .fetursList{
+    padding: 0px !important;
+
+  }
+  footer{
+    padding: 9px 16px !important;
   }
   nav{
     font-size: 0.9rem;

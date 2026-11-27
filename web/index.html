@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Syncly - Watch together. Stay together</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=12" />
+    <link rel="stylesheet" href="/static/css/style.css?v=1542" />
   </head>
   <body>
     <!-- Hello world {{.}} -->
@@ -12,9 +12,9 @@
       <nav>
         <h1 class="logo">Syncly</h1>
         <ul class="items">
-          <li>Home</li>
-          <li>Features</li>
-          <li>How this work</li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#howItsWork">How this work</a></li>
         </ul>
         <a href="/room" class="nav-cta"> Create Room</a>
       </nav>
@@ -25,16 +25,18 @@
           can live while you Watch
         </h3>
         <div class="cta">
-          <button class="create">Create Room</button>
-          <button class="features">Features</button>
+          <button class="create" onclick="window.location.href = '/create-room'">Create Room</button>
+          <button class="features" onclick="window.location.href = '#features'">Features</button>
         </div>
 
         <div></div>
       </div>
     </section>
-    <section class="features">
-      <h1>Features</h1>
-      <h2></h2>
+    <section class="features" id="features">
+      <div class="heading">
+        <h1>Features</h1>
+        <h2>Built for zero-lag playback and effortless sharing.</h2>
+      </div>
       <div class="fetursList">
         <div class="box">
           <p class="ico">⚡</p>
@@ -44,7 +46,80 @@
             room within milliseconds via WebSockets.
           </p>
         </div>
+
+        <div class="box">
+          <p class="ico">💬</p>
+          <h2 class="heading">Live Room Chat & Presence</h2>
+          <p>
+            See who is currently online in your room and react together in real
+            time without leaving the video screen.
+          </p>
+        </div>
+
+        <div class="box">
+          <p class="ico">📝</p>
+          <h2 class="heading">SRT & VTT Subtitle Support</h2>
+          <p>
+            Paste any subtitle URL—Syncly automatically converts .srt files to
+            WebVTT and renders a clean custom overlay.
+          </p>
+        </div>
+
+        <div class="box">
+          <p class="ico">🔒</p>
+          <h2 class="heading">Public or Passcode Rooms</h2>
+          <p>
+            Keep your watch party open to friends or lock it with a private
+            passcode for invite-only viewing.
+          </p>
+        </div>
       </div>
     </section>
+    <section class="howItsWork" id="howItsWork">
+      <div class="heading">
+        <h1>How Syncly Works</h1>
+        <h2>Start watching with friends in three simple steps.</h2>
+      </div>
+      <div class="fetursList">
+        
+        <div class="box">
+          <div class="numIco">1</div>
+          <h2 class="heading">Instant Playback Sync</h2>
+          <p>
+            Play, pause, or seek—every action syncs across all viewers in the
+            room within milliseconds via WebSockets.
+          </p>
+        </div>
+        
+        <div class="box">
+          <div class="numIco">2</div>
+          <h2 class="heading">Share the Link</h2>
+          <p>
+            Copy your unique room URL and send it to friends—no heavy downloads required.
+          </p>
+        </div>
+        
+        <div class="box">
+          <div class="numIco">3</div>
+          <h2 class="heading">Press Play & Chat</h2>
+          <p>
+            Sit back and enjoy synchronized video playback with live chat side-by-side.
+          </p>
+        </div>
+
+      </div>
+    </section>
+    <section class="ctaSec">
+      <div class="heading">
+        <h1>Syncly</h1>
+        <h2>Watch together. Stay together.</h2>
+      </div>
+      <button onclick="window.location.href = '/create-room'">Start a Watch Party</button>
+       
+    </section>
+    <footer>
+      <h1>Syncly</h1>
+      <p>© 2026 Syncly. All rights</p>
+    </footer>
   </body>
 </html>
