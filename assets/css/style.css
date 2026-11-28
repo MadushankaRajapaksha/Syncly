@@ -1581,6 +1581,50 @@ video::cue{
   .videoContainer .video {
     padding: 8px;
   }
+  .subOverlay{
+    bottom: 40px;
+
+  }
+  .controlsBar{
+    padding: 8px 8px 6px;
+ 
+    gap: 6px;
+    
+
+  }
+  .seekBar{
+    
+    height: 4px;
+ 
+
+  }
+   
+  .buttons{
+ 
+    font-size: 10px;
+
+  }
+  .ctrl-btn{
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 6px;
+     
+    font-weight: 600;
+    
+
+  } 
+  .left, .right{
+    
+    gap: 6px;
+  }
+
+  .subText{
+    
+    font-size: 0.8em;
+    line-height: 1;
+    padding: 3px 7px;
+     
+  }
 
    .onlineUsersContainer {
     height: 120px;
