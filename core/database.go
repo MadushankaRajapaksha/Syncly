@@ -11,12 +11,15 @@ import (
 )
 
 func ConnectDb() *pgxpool.Pool {
-	// load dotenv file
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Erro got when loading .env")
+	// load dotenv file in only local run
+	if os.Getenv("ENV") != "Production" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("Erro got when loading .env")
 
+		}
 	}
+
 	ctx := context.Background()
 	// load env and get database url
 	databaseUrl := os.Getenv("DATABASE_URL")

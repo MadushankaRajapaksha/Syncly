@@ -69,6 +69,15 @@ func roomRoute(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func userRoomRoute(w http.ResponseWriter, r *http.Request) {
+	templ, err := template.ParseFiles("web/userRooms.html")
+	if err != nil {
+		fmt.Fprint(w, "ERORR : Internal Server ERORR")
+
+	}
+	templ.Execute(w, "")
+}
+
 func main() {
 
 	// connect to database
@@ -88,6 +97,8 @@ func main() {
 	r.HandleFunc("/create-room", logging(createRoomRoute))
 	// room route handler
 	r.HandleFunc("/room/{roomId}", logging(roomRoute))
+	// handler user rooms alredy used
+	r.HandleFunc("/room", logging(userRoomRoute))
 
 	// api routes
 	r.HandleFunc("/api/room", logging(a.CreateRoom))
