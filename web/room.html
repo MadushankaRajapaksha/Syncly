@@ -39,7 +39,7 @@
       <fieldset class="profileData passcodeContainer">
         <h1>Create you profile first</h1>
         <img
-          src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
+          src="https://cdn.image.sniplyx.xyz/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
           alt=""
           class="profileImage"
         />
@@ -85,7 +85,7 @@
       <h1 class="roomNameH">Room Name</h1>
 
       <img
-        src="/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
+        src="https://cdn.image.sniplyx.xyz/static/profile_pitures/Cat_wearing_headphones_holding.jpg"
         alt=""
         class="profileImageroom"
       />
@@ -818,7 +818,7 @@
             const imageList = document.querySelector(`.imgList`);
             const defDP = profilePictureList[2];
             const changePhoto = document.querySelector(`.changePhoto`);
-            let selectedImage = `/static/profile_pitures/${profilePictureList[1]}`;
+            let selectedImage = `https://cdn.image.sniplyx.xyz/static/profile_pitures/${profilePictureList[1]}`;
 
 
             // imageSelector
@@ -840,13 +840,13 @@
 
 
             // set default image to imagecontainer
-            imageContainer.src = `/static/profile_pitures/${defDP}`;
+            imageContainer.src = `https://cdn.image.sniplyx.xyz/static/profile_pitures/${defDP}`;
 
             // list all images
             let imgCount = 0;
 
             profilePictureList.forEach((img) => {
-              const image = ` /static/profile_pitures/${img}`;
+              const image = ` https://cdn.image.sniplyx.xyz/static/profile_pitures/${img}`;
               const item = document.createElement("img");
 
               item.src = image;
